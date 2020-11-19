@@ -1,0 +1,18 @@
+@import "../../mixins";
+
+.eko_playCover{
+  @include ekoCover;
+  background: black;
+}
+
+.eko_playCover_playButton{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  font-size: 2em;
+  width: 6vw;
+  min-width: 140px;
+  pointer-events: none;
+}

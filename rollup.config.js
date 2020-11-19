@@ -3,6 +3,7 @@ import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import generatePackageJson from 'rollup-plugin-generate-package-json'
 import json from '@rollup/plugin-json';
+import scss from 'rollup-plugin-scss'
 import {uglify} from 'rollup-plugin-uglify'
 
 
@@ -32,6 +33,7 @@ export default {
                 }
             })
         }),
+        scss(),
         json(),
         // uglify(),
     ]

@@ -18,6 +18,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-generate-package-json": "^3.2.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-scss": "^2.6.1",
     "rollup-plugin-uglify": "^6.0.4"
   },
   "peerDependencies": {
@@ -26,7 +27,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c - w"
+    "dev": "rollup -c -w"
   },
   "author": "",
   "license": "ISC"

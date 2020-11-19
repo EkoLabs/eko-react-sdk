@@ -1,0 +1,13 @@
+@import "../../mixins";
+
+.eko_unsupportedMessage{
+    @include ekoCover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    user-select: none;
+}

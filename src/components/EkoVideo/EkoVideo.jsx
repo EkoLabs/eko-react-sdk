@@ -1,55 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import EkoPlayer from 'eko-js-sdk';
-
-window.blahReact  = React;
-
-const STYLES = {
-    UNSUPPORTED: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'black',
-        color: 'white',
-        textAlign: 'center',
-        fontSize: '30px',
-        userSelect: 'none',
-    },
-    COVER: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-    },
-    PLAY: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        margin: 'auto',
-        fontSize: '2em',
-        width: '6vw',
-        minWidth: '140px',
-        pointerEvents: 'none',
-    }
-};
-const DEFAULT_UNSUPPORTED_EL = <div style={{ ...STYLES.COVER, ...STYLES.UNSUPPORTED }}>Video is not supported on current browser</div>;
-const DEFAULT_PLAY_COVER_EL = (
-    <div style={{ ...STYLES.COVER, backgroundColor: 'black' }}>
-        <div style={STYLES.PLAY}>
-            <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" stroke="#7420b9" strokeWidth="3"></circle>
-                <circle fill="#111111" cx="50" cy="50" r="46"></circle>
-                <path
-                    fill="#7420b9"
-                    d="M70.8,49.7c0,1-1,1.8-1,1.8L41.6,70.1c-2,1.4-3.7,0.4-3.7-2.3V31.6c0-2.7,1.7-3.8,3.7-2.4l28.1,18.6C69.7,47.9,70.8,48.6,70.8,49.7z"
-                ></path>
-            </svg>
-        </div>
-    </div>
-);
+import DefaultPlayCover from "../DefaultPlayCover/DefaultPlayCover";
+import DefaultUnsupportedMessage from "../DefaultUnsupportedMessage/DefaultUnsupportedMessage";
+import "./EkoVideo.scss";
 
 // TODO
 // ====
@@ -95,8 +49,8 @@ export function EkoVideo({
                       loadingCover,
                       waitForAutoplayTimeout = 1.5,
                       children,
-                      playCover = DEFAULT_PLAY_COVER_EL,
-                      unsupported = DEFAULT_UNSUPPORTED_EL,
+                      playCover = DefaultPlayCover,
+                      unsupported = DefaultUnsupportedMessage,
                   }) {
     const [player, setPlayer] = useState(null);
     const [isSupported, setIsSupported] = useState(null);
@@ -233,7 +187,7 @@ export function EkoVideo({
             {
                 loadingCover && shouldShowLoadingCover ?
                     (
-                        <div style={STYLES.COVER}>
+                        <div className="eko_cover">
                             {loadingCover}
                         </div>
                     ) :
@@ -244,7 +198,7 @@ export function EkoVideo({
             {
                 shouldShowPlayCover ?
                     (
-                        <div style={STYLES.COVER}>
+                        <div className="eko_cover">
                             {playCover}
                         </div>
                     ) :

@@ -1,3 +1,3 @@
-import { EkoVideo }  from "./EkoVideo";
+import { EkoVideo }  from "./components/EkoVideo/EkoVideo";
 
 export { EkoVideo };
