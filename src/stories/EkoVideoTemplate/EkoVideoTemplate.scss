@@ -1,0 +1,32 @@
+.ekoVideoCanvas{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ekoVideoTemplate{
+  box-sizing: border-box;
+  height: 0;
+  width: 100%;
+  position: relative;
+  padding-top: 9 / 16 * 100%;
+}
+
+button.ekoVideoTemplate {
+  border: 0;
+  cursor: pointer;
+
+  .ekoVideoTemplateContent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.ekoVideoTemplateContent{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

@@ -4,22 +4,34 @@
   "description": "A react component that embeds eko videos",
   "main": "dist/bundles/bundle.js",
   "dependencies": {
-    "eko-js-sdk": "github:EkoLabs/eko-js-sdk#complex-cover",
-    "prop-types": "^15.7.2"
+    "eko-js-sdk": "github:EkoLabs/eko-js-sdk",
+    "prop-types": "^15.7.2",
+    "react-is": "^17.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
     "@rollup/plugin-json": "^4.1.0",
+    "@storybook/addon-actions": "^6.1.9",
+    "@storybook/addon-essentials": "^6.1.9",
+    "@storybook/addon-links": "^6.1.9",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^6.1.9",
+    "babel-loader": "^8.2.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "css-loader": "^5.0.1",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
     "rollup": "^2.33.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-generate-package-json": "^3.2.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-scss": "^2.6.1",
-    "rollup-plugin-uglify": "^6.0.4"
+    "rollup-plugin-uglify": "^6.0.4",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0"
   },
   "peerDependencies": {
     "react": "^16.13.0",
@@ -27,7 +39,9 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "dev": "rollup -c -w",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "",
   "license": "ISC"
