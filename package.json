@@ -4,7 +4,7 @@
   "description": "A react component that embeds eko videos",
   "main": "dist/bundles/bundle.js",
   "dependencies": {
-    "eko-js-sdk": "github:EkoLabs/eko-js-sdk",
+    "eko-js-sdk": "0.0.7",
     "prop-types": "^15.7.2",
     "react-is": "^17.0.1"
   },
