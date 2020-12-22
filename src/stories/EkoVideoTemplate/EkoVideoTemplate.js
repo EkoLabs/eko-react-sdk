@@ -28,7 +28,6 @@ export default function EkoVideoTemplate(args, context){
             )
         }
     } else {
-        console.log('fff');
         return (
             <div className="ekoVideoCanvas">{ekoVideoEl}</div>
         )

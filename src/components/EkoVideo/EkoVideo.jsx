@@ -43,7 +43,7 @@ import {getRenderable} from "./utils";
 export function EkoVideo({
                       projectId,
                       env,
-                      params,
+                      params = {},
                       forwardParams,
                       events,
                       onPlayerInit,
@@ -51,7 +51,7 @@ export function EkoVideo({
                       waitForAutoplayTimeout,
                       playCover,
                       unsupportedCover = DefaultUnsupportedMessage,
-
+                      embedAPI = "1.0"
                   }) {
     let playerRef = useRef();
     const [isSupported, setIsSupported] = useState(true); // we optimistically assume the player is supported
@@ -74,7 +74,7 @@ export function EkoVideo({
     useEffect(() => {
         if (EkoPlayer.isSupported()) {
             setIsSupported(true);
-            playerRef.current = new EkoPlayer(ekoProjectContainer.current);
+            playerRef.current = new EkoPlayer(ekoProjectContainer.current, embedAPI);
             if (onPlayerInit){
                 onPlayerInit(playerRef.current);
             }

@@ -6,9 +6,9 @@ import React from "react";
  * @param ref
  * @returns {JSX.Element|null|*}
  */
-export function getRenderable(ref) {
+export function getRenderable(ref, props) {
     if (ReactIs.isValidElementType(ref)) {
-        return React.createElement(ref);
+        return React.createElement(ref, props);
     } else if (ReactIs.isElement(ref)) {
         return ref;
     }

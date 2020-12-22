@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback, useRef} from "react";
 import {getRenderable} from "./utils";
 import DefaultPlayCover from "../DefaultPlayCover/DefaultPlayCover";
 
@@ -9,8 +9,38 @@ export function useCovers({loadingCover,
                            playerLoadingState}){
     const [shouldShowLoadingCover, setShouldShowLoadingCover] = useState(true);
     const [shouldShowPlayCover, setShouldShowPlayCover] = useState(false);
+    const transitionOut = useRef({
+        transitionFunction: null,
+        isRunning: false,
+        hasEnded: false
+    });
     const [autoplayTimedOut, setAutoplayTimedOut] = useState(false);
 
+
+    let hideLoadingCover = useCallback(() => {
+        let transition = transitionOut.current
+        if (transition.transitionFunction){
+            if (!transition.isRunning) {
+                let callback = () => {
+                    transition.isRunning = false;
+                    transition.hasEnded = true;
+                    setShouldShowLoadingCover(false);
+                }
+
+                transition.isRunning = true;
+                transition.transitionFunction(callback);
+            }
+        } else {
+            setShouldShowLoadingCover(false);
+        }
+    });
+
+    let registerTransitionOut = transitionFunction => {
+        // don't register a new function if the current one is already running
+        if (!transitionOut.current.isRunning){
+            transitionOut.current.transitionFunction = transitionFunction
+        }
+    }
 
     useEffect(()=>{
         if (playerLoadingState.state === 'loading') {
@@ -26,11 +56,11 @@ export function useCovers({loadingCover,
                     setAutoplayTimedOut(true);
                 }, waitForAutoplayTimeout * 1000);
             } else {
-                setShouldShowLoadingCover(false);
+                hideLoadingCover()
                 setShouldShowPlayCover(true);
             }
         } else if (playerLoadingState.state === 'started') {
-            setShouldShowLoadingCover(false);
+            hideLoadingCover();
             setShouldShowPlayCover(false);
         }
     }, [playerLoadingState])
@@ -45,12 +75,11 @@ export function useCovers({loadingCover,
 
         // If we're currently showing the loading cover,
         // hide the loading cover and display the play cover instead.
-        if (shouldShowLoadingCover) {
-            setShouldShowLoadingCover(false);
+        if (shouldShowLoadingCover || (transitionOut.current.transitionFunction && !transitionOut.current.hasEnded)) {
+            hideLoadingCover();
             setShouldShowPlayCover(true);
         }
     }, [autoplayTimedOut])
-
 
 
     // Conditionally render the custom loading cover (if any given)
@@ -65,7 +94,7 @@ export function useCovers({loadingCover,
     let loadingCoverEl =  loadingCover && shouldShowLoadingCover &&
         (
             <div className="eko_cover">
-                {getRenderable(loadingCover)}
+                {getRenderable(loadingCover, {registerTransitionOut})}
             </div>
         );
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { EkoVideo } from '../components/EkoVideo/EkoVideo';
 import CookingLoadingCover from "./CookingLoadingCover/CookingLoadingCover";
-import CookingLoadingCoverWithCustomTransition from "./CookingLoadingCoverWithCustomTransition/CookingLoadingCoverWithCustomTransition";
+import CookingLoadingCoverWithCustomTransition from "./CookingLoadingCover/CookingLoadingCoverWithCustomTransition";
 import EkoVideoTemplate from "./EkoVideoTemplate/EkoVideoTemplate";
 
 export default {
@@ -50,11 +50,9 @@ NoAutoplay.args = {
 // custom loading cover
 export const CustomLoadingCover = EkoVideoTemplate.bind({});
 CustomLoadingCover.args = {
-    projectId: "M48nxx",
-    // projectId: "V5ErbX",
-    // projectId: "AWLLK1",
+    projectId: "AWLLK1",
     loadingCover: CookingLoadingCover,
-    // params: {autoplay: false}
+    embedAPI: "2.0",
 };
 
 CustomLoadingCover.parameters = {
@@ -65,5 +63,5 @@ export const CustomLoadingCoverWithCustomTransition = EkoVideoTemplate.bind({});
 CustomLoadingCoverWithCustomTransition.args = {
     projectId: "AWLLK1",
     loadingCover: CookingLoadingCoverWithCustomTransition,
-    params: {autoplay: false}
+    embedAPI: "2.0",
 };
