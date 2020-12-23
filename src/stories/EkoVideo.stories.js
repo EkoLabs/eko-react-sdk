@@ -14,18 +14,26 @@ export default {
             defaultValue: null
         }
     },
-    parameters: {docs: {
+    parameters: {
+        docs: {
             // inlineStories: false,
             iframeHeight: 500,
             description: {
                 component: 'Renders an eko Video'
             }
-        }}
+        },
+        // Sets a delay for the component's stories
+        chromatic: { delay: 5000 },
+    }
 };
 
 
 const defaultArgs = {
-    projectId: "VyYYl0"
+    projectId: "VyYYl0",
+    params: {
+        clearcheckpoints: true,
+        autoplay: true
+    }
 };
 
 export const Simple = EkoVideoTemplate.bind({});
@@ -43,6 +51,7 @@ export const NoAutoplay = EkoVideoTemplate.bind({});
 NoAutoplay.args = {
     ...defaultArgs,
     params: {
+        ...defaultArgs.params,
         autoplay: false
     }
 };
