@@ -28,7 +28,7 @@ export default {
             }
         },
         // Sets a delay for the component's stories
-        chromatic: { delay: 10000 },
+        chromatic: { delay: 12000 },
     }
 };
 
