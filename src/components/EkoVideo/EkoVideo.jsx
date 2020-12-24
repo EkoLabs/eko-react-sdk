@@ -20,17 +20,17 @@ import {getRenderable} from "./utils";
  * @param {object} props
  * @param {string} props.projectId - The eko project ID to load. Changing this prop will cause a reload.
  * @param {embedAPI} props.embedAPI - eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used.
- * @param {string} props.env - The eko env.
- * @param {object} props.params - Map of eko embed params.
- * @param {string[]} props.forwardParams - Array of params to forward from parent frame into eko embed.
+ * @param {string} props.env - The eko env
+ * @param {object} props.params - A dictionary of embed params that will affect the delivery. Default includes `{autoplay: true}`
+ * @param {string[]} props.pageParams - Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`.
  * @param {object} props.events - Map of eko player events to listeners.
- * @param {ReactElement | elementType} props.unsupportedCover - A React element that will be displayed in case eko videos are not supported on current environment/browser.
- * If not given, will display a default unsupportedCover message.
  * @param {ReactElement| ElementType} props.loadingCover - A React element that will be displayed while video is loading.
  * If not given, will show eko's default loading animation.
  * @param {ReactElement | ElementType } props.playCover - A React element that will be displayed when a custom loading cover (i.e. props.loadingCover) is given, and player does not autoplay.
  * Clicks must pass through this element (i.e. using `pointer-events: none`) so they are triggered on the iframe behind this element and playback can begin.
  * If not given, will display a default play cover.
+ * @param {ReactElement | elementType} props.unsupportedCover - A React element that will be displayed in case eko videos are not supported on current environment/browser.
+ * If not given, will display a default unsupportedCover message.
  * @param {number} props.waitForAutoplayTimeout - Timeout in seconds to wait for autoplay after video has loaded, but before it has started playback.
  * This is relevant for when a `loadingCover` is passed and video is expected to autoplay.
  * Will hold off on hiding the `loadingCover` until timeout expires, at which point, if video has not started playing, the `playCover` will be displayed instead of `loadingCover`.
@@ -41,16 +41,16 @@ import {getRenderable} from "./utils";
  */
 export function EkoVideo({
                       projectId,
+                      embedAPI = "1.0",
                       env,
                       params = {},
-                      forwardParams,
+                      pageParams,
                       events,
-                      onPlayerInit,
                       loadingCover,
-                      waitForAutoplayTimeout,
                       playCover,
                       unsupportedCover = DefaultUnsupportedMessage,
-                      embedAPI = "1.0"
+                      waitForAutoplayTimeout,
+                      onPlayerInit,
                   }) {
     let playerRef = useRef();
     const [isSupported, setIsSupported] = useState(true); // we optimistically assume the player is supported
@@ -99,7 +99,7 @@ export function EkoVideo({
             env,
             params,
             events: (events && Object.keys(events)) || [],
-            pageParams: forwardParams || [],
+            pageParams: pageParams || [],
         });
 
         // We return the removeEventListeners from the useEffect function so it'll be called when the component unmounts, or when deps change.
@@ -141,6 +141,7 @@ const removeEventListeners = (player, events) => {
 
 EkoVideo.propTypes = {
     projectId: PropTypes.string.isRequired,
+    embedAPI: PropTypes.string,
     env: PropTypes.string,
     params: PropTypes.objectOf(
         PropTypes.oneOfType([
@@ -149,11 +150,12 @@ EkoVideo.propTypes = {
             PropTypes.number
         ])
     ),
+    pageParams: PropTypes.arrayOf(PropTypes.string),
+    events: PropTypes.objectOf(PropTypes.func),
     loadingCover: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
     playCover: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
     unsupportedCover:  PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
-    forwardParams: PropTypes.arrayOf(PropTypes.string),
-    events: PropTypes.objectOf(PropTypes.func),
+    waitForAutoplayTimeout: PropTypes.number,
     onPlayerInit: PropTypes.func,
 };
 
