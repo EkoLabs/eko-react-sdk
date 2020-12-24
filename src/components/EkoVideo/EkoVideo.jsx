@@ -10,8 +10,6 @@ import {getRenderable} from "./utils";
 // ====
 //
 // - Fix react-hooks/exhaustive-deps warning
-// - Support loading cover / play cover transitions
-// - This implementation requires eko-js-sdk branch "complex-cover" (not yet merged to master)
 
 /**
  * The EkoVideo React component embeds an eko video iframe using [eko-js-sdk](https://github.com/EkoLabs/eko-js-sdk).
@@ -21,6 +19,7 @@ import {getRenderable} from "./utils";
  * @type {React.Component}
  * @param {object} props
  * @param {string} props.projectId - The eko project ID to load. Changing this prop will cause a reload.
+ * @param {embedAPI} props.embedAPI - eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used.
  * @param {string} props.env - The eko env.
  * @param {object} props.params - Map of eko embed params.
  * @param {string[]} props.forwardParams - Array of params to forward from parent frame into eko embed.
