@@ -3,11 +3,12 @@ import isChromatic from 'chromatic/isChromatic';
 import { EkoVideo } from '../../components/EkoVideo/EkoVideo';
 import './EkoVideoTemplate.scss';
 
+let testChromatic = (new URLSearchParams(window.location.search)).has("testChromatic");
 
 export default function EkoVideoTemplate(args, context){
     let [shouldLoad, setShouldLoad] = useState();
 
-    if (isChromatic()) {
+    if (testChromatic || isChromatic()) {
         // without this player.once can't register to "nodestart" event
         args.events = {nodestart: ()=>{}}
         args.onPlayerInit = player => {
