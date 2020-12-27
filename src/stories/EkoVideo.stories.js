@@ -28,7 +28,12 @@ export default {
             }
         },
         // Sets a delay for the component's stories
-        chromatic: { delay: 20000 },
+        chromatic: {
+            // prevent false positives
+            // Chromatic’s default threshold is .063 where 0 is most accurate and 1 is least accurate
+            diffThreshold: 0.1,
+            delay: 20000
+        },
     }
 };
 
