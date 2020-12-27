@@ -24,7 +24,7 @@ export default {
                 component: 'Renders an eko Video'
             },
             source: {
-                code: `<EkoVideo projectId="VyYYl0"/>`
+                code: `<EkoVideo id="VyYYl0"/>`
             }
         },
     }
@@ -32,7 +32,7 @@ export default {
 
 
 const defaultArgs = {
-    projectId: "VyYYl0",
+    id: "VyYYl0",
     params: {
         clearcheckpoints: true,
         autoplay: true
@@ -68,7 +68,7 @@ NoAutoplay.parameters = {
     ...defaultParams,
     docs: {
         source: {
-            code: `<EkoVideo projectId="VyYYl0" params={{autoplay: false}} />`
+            code: `<EkoVideo id="VyYYl0" params={{autoplay: false}} />`
         }
     }
 }
@@ -84,7 +84,7 @@ NoAutoplay.args = {
 // custom loading cover
 export const CustomLoadingCover = EkoVideoTemplate.bind({});
 CustomLoadingCover.args = {
-    projectId: "AWLLK1",
+    id: "AWLLK1",
     loadingCover: CookingLoadingCover,
     embedAPI: "2.0",
 };
@@ -94,14 +94,14 @@ CustomLoadingCover.parameters = {
     docs: {
         description: { story: 'This cover will be displayed while the project is loading, and removed once playback is possible'},
         source: {
-            code: `<EkoVideo projectId="AWLLK1" loadingCover={CookingLoadingCover} />`
+            code: `<EkoVideo id="AWLLK1" loadingCover={CookingLoadingCover} />`
         }
     },
 };
 
 export const CustomLoadingCoverWithCustomTransition = EkoVideoTemplate.bind({});
 CustomLoadingCoverWithCustomTransition.args = {
-    projectId: "AWLLK1",
+    id: "AWLLK1",
     loadingCover: CookingLoadingCoverWithCustomTransition,
     embedAPI: "2.0",
 };
@@ -111,7 +111,7 @@ CustomLoadingCoverWithCustomTransition.parameters = {
     docs: {
         description: { story: 'This cover will be displayed while the project is loading, and removed using some transition animation once playback is possible. See `CookingLoadingCoverWithCustomTransition.jsx` for an example of implementation'},
         source: {
-            code: `<EkoVideo projectId="AWLLK1" loadingCover={CookingLoadingCoverWithCustomTransition} />`
+            code: `<EkoVideo id="AWLLK1" loadingCover={CookingLoadingCoverWithCustomTransition} />`
         }
     },
 };
