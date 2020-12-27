@@ -129,7 +129,7 @@ Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/
  | embedAPI | `embedAPI` | eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used. |
  | env | `string` | The eko env |
  | params | `object` | A dictionary of embed params that will affect the delivery. Default include `{autoplay: true}` |
- | pageParams | `string[]` | Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded |: `autoplay, debug, utm_*, headnodeid`.
+ | pageParams | `string[]` | Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`. |
  | events | `object` | Map of eko player events to listeners. |
  | loadingCover | `ReactElement / ElementType` | A React element that will be displayed while video is loading. If not given, will show eko's default loading animation. |
  | playCover | `ReactElement / ElementType ` | A React element that will be displayed when a custom loading cover (i.e. props.loadingCover) is given, and player does not autoplay. Clicks must pass through this element (i.e. using `pointer-events: none`) so they are triggered on the iframe behind this element and playback can begin. If not given, will display a default play cover. |
