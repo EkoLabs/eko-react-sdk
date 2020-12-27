@@ -64,7 +64,6 @@ export function EkoVideo({
 
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
-        // console.log(state, params);
         setPlayerLoadingState({state, params});
     }
 
