@@ -27,13 +27,6 @@ export default {
                 code: `<EkoVideo projectId="VyYYl0"/>`
             }
         },
-        // Sets a delay for the component's stories
-        chromatic: {
-            // prevent false positives
-            // Chromatic’s default threshold is .063 where 0 is most accurate and 1 is least accurate
-            diffThreshold: 0.2,
-            delay: 20000
-        },
     }
 };
 
@@ -46,10 +39,23 @@ const defaultArgs = {
     }
 };
 
+const defaultParams = {
+    // Sets a delay for the component's stories
+    chromatic: {
+        // prevent false positives
+        // Chromatic’s default threshold is .063 where 0 is most accurate and 1 is least accurate
+        diffThreshold: 0.2,
+        delay: 20000
+    },
+}
+
 export const Simple = EkoVideoTemplate.bind({});
 Simple.args = {
     ...defaultArgs,
 };
+Simple.parameters ={
+    ...defaultParams
+}
 
 Simple.parameters = {
     docs: { description: { story: 'some story **markdown**'} },
@@ -59,6 +65,7 @@ Simple.parameters = {
 // no autoplay
 export const NoAutoplay = EkoVideoTemplate.bind({});
 NoAutoplay.parameters = {
+    ...defaultParams,
     docs: {
         source: {
             code: `<EkoVideo projectId="VyYYl0" params={{autoplay: false}} />`
@@ -83,6 +90,7 @@ CustomLoadingCover.args = {
 };
 
 CustomLoadingCover.parameters = {
+    ...defaultParams,
     docs: {
         description: { story: 'This cover will be displayed while the project is loading, and removed once playback is possible'},
         source: {
@@ -99,6 +107,7 @@ CustomLoadingCoverWithCustomTransition.args = {
 };
 
 CustomLoadingCoverWithCustomTransition.parameters = {
+    ...defaultParams,
     docs: {
         description: { story: 'This cover will be displayed while the project is loading, and removed using some transition animation once playback is possible. See `CookingLoadingCoverWithCustomTransition.jsx` for an example of implementation'},
         source: {
