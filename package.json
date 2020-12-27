@@ -1,6 +1,6 @@
 {
-  "name": "eko-react-sdk",
-  "version": "1.0.0",
+  "name": "@ekolabs/eko-react-sdk",
+  "version": "0.0.1",
   "description": "A react component that embeds eko videos",
   "main": "dist/bundles/bundle.js",
   "dependencies": {
@@ -36,11 +36,16 @@
   },
   "peerDependencies": {
     "react": "^16.13.0",
-    "react-dom:": "^16.13.0"
+    "react-dom": "^16.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EkoLabs/eko-react-sdk.git"
   },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "publish": "npm publish ./dist --access public",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "chromatic": "npx chromatic --project-token 0st0qnswhfsk"
