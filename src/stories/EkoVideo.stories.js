@@ -8,13 +8,17 @@ export default {
     title: 'Example/EkoVideo',
     component: EkoVideo,
     argTypes: {
-        unsupportedCover: { control: { disable: true } },
+        id: {},
+        params: { control: { disable: true } },
+        pageParams: { control: { disable: true } },
+        events: { control: { disable: true } },
         loadingCover: { control: { disable: true } },
         playCover: { control: { disable: true } },
-        events: { control: { disable: true } },
+        unsupportedCover: { control: { disable: true } },
+        waitForAutoplayTimeout: { control: { disable: true } },
         onPlayerInit: { control: { disable: true } },
-        params: { control: { disable: true } },
-        forwardParams: { control: { disable: true } }
+        embedAPI: { table: { disable: true } },
+        env: { table: { disable: true } },
     },
     parameters: {
         docs: {

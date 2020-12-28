@@ -16,17 +16,15 @@ Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/
 
 | Prop           | Type           | Description  |
 | :-------------: |:--------------:| :------------|
-| id | `string` | The eko project ID to load. Changing this prop will cause a reload. |
- | embedAPI | `embedAPI` | eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used. |
- | env | `string` | The eko env |
- | params | `object` | A dictionary of embed params that will affect the delivery. Default include `{autoplay: true}` |
- | pageParams | `string[]` | Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`. |
- | events | `object` | Map of eko player events to listeners. |
- | loadingCover | `ReactElement / ElementType` | A React element that will be displayed while video is loading. If not given, will show eko's default loading animation. |
- | playCover | `ReactElement / ElementType ` | A React element that will be displayed when a custom loading cover (i.e. props.loadingCover) is given, and player does not autoplay. Clicks must pass through this element (i.e. using `pointer-events: none`) so they are triggered on the iframe behind this element and playback can begin. If not given, will display a default play cover. |
- | unsupportedCover | `ReactElement / elementType` | A React element that will be displayed in case eko videos are not supported on current environment/browser. If not given, will display a default unsupportedCover message. |
- | waitForAutoplayTimeout | `number` | Timeout in seconds to wait for autoplay after video has loaded, but before it has started playback. This is relevant for when a `loadingCover` is passed and video is expected to autoplay. Will hold off on hiding the `loadingCover` until timeout expires, at which point, if video has not started playing, the `playCover` will be displayed instead of `loadingCover`. Default value is 1.5 seconds. |
- | onPlayerInit | `function` | A callback function that will be called with an [EkoPlayer](https://github.com/EkoLabs/eko-js-sdk#ekoplayer) instance once available. Useful for when you want to be able to use the underlying functionality exposed by the EkoPlayer, for example calling `ekoPlayer.invoke('muted', true)`. |
+| id | `string` | The eko project ID to load. Changing this prop will cause a reload. |  
+| params | `object` | A dictionary of embed params that will affect the delivery. Default include `{autoplay: true}` |
+| pageParams | `string[]` | Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`. |
+| events | `object` | Map of eko player events to listeners. |
+| loadingCover | `ReactElement / ElementType` | A React element that will be displayed while video is loading. If not given, will show eko's default loading animation. |
+| playCover | `ReactElement / ElementType ` | A React element that will be displayed when a custom loading cover (i.e. props.loadingCover) is given, and player does not autoplay. Clicks must pass through this element (i.e. using `pointer-events: none`) so they are triggered on the iframe behind this element and playback can begin. If not given, will display a default play cover. |
+| unsupportedCover | `ReactElement / elementType` | A React element that will be displayed in case eko videos are not supported on current environment/browser. If not given, will display a default unsupportedCover message. |
+| waitForAutoplayTimeout | `number` | Timeout in seconds to wait for autoplay after video has loaded, but before it has started playback. This is relevant for when a `loadingCover` is passed and video is expected to autoplay. Will hold off on hiding the `loadingCover` until timeout expires, at which point, if video has not started playing, the `playCover` will be displayed instead of `loadingCover`. Default value is 1.5 seconds. |
+| onPlayerInit | `function` | A callback function that will be called with an [EkoPlayer](https://github.com/EkoLabs/eko-js-sdk#ekoplayer) instance once available. Useful for when you want to be able to use the underlying functionality exposed by the EkoPlayer, for example calling `ekoPlayer.invoke('muted', true)`. |
 
 
 ## Common use cases
