@@ -49,7 +49,7 @@ const defaultParams = {
         // prevent false positives
         // Chromatic’s default threshold is .063 where 0 is most accurate and 1 is least accurate
         diffThreshold: 0.2,
-        delay: 20000
+        delay: 14500
     },
 }
 
