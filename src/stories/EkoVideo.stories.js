@@ -8,13 +8,17 @@ export default {
     title: 'Example/EkoVideo',
     component: EkoVideo,
     argTypes: {
-        unsupportedCover: { control: { disable: true } },
+        id: {},
+        params: { control: { disable: true } },
+        pageParams: { control: { disable: true } },
+        events: { control: { disable: true } },
         loadingCover: { control: { disable: true } },
         playCover: { control: { disable: true } },
-        events: { control: { disable: true } },
+        unsupportedCover: { control: { disable: true } },
+        waitForAutoplayTimeout: { control: { disable: true } },
         onPlayerInit: { control: { disable: true } },
-        params: { control: { disable: true } },
-        forwardParams: { control: { disable: true } }
+        embedAPI: { table: { disable: true } },
+        env: { table: { disable: true } },
     },
     parameters: {
         docs: {
@@ -44,14 +48,15 @@ const defaultParams = {
     chromatic: {
         // prevent false positives
         // Chromatic’s default threshold is .063 where 0 is most accurate and 1 is least accurate
-        diffThreshold: 0.2,
-        delay: 20000
+        diffThreshold: 0.4,
+        delay: 14500
     },
 }
 
 export const Simple = EkoVideoTemplate.bind({});
 Simple.args = {
     ...defaultArgs,
+    chromaticId: "M48nxx"
 };
 Simple.parameters ={
     ...defaultParams

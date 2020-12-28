@@ -9,13 +9,18 @@ export default function EkoVideoTemplate(args, context){
     let [shouldLoad, setShouldLoad] = useState();
 
     if (testChromatic || isChromatic()) {
+        // some stories use specific tests for chromatic
+        if (args.chromaticId){
+            args.id = args.chromaticId;
+        }
+
         // without this player.once can't register to "nodestart" event
         args.events = {nodestart: ()=>{}}
         args.onPlayerInit = player => {
             // always pause on the one second mark  to achieve consistent visual regression test results
             player.once("nodestart", () => {
-                player.pause();
                 player.invoke("currentTime", 1)
+                player.pause();
             });
         }
     }

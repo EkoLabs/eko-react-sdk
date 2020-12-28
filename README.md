@@ -2,7 +2,15 @@
 
 A React component wrapper for [eko-js-sdk](https://github.com/EkoLabs/eko-js-sdk) which enables easy integration of eko videos into React apps
 
-Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/)
+Demo (Storybook) available [here](https://ekolabs.github.io/eko-react-sdk/)
+
+## Installation
+
+From your favorite CLI tool:
+
+```
+npm install @ekolabs/eko-react-sdk
+```
 
 ## Simple usecase
 
@@ -14,7 +22,7 @@ Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/
 
 | Prop           | Type           | Description  |
 | :-------------: |:--------------:| :------------|
-| id | `string` | The eko project ID to load. Changing this prop will cause a reload. |
+| id | `string` | The eko video ID to load. Changing this prop will cause a reload. |  
 | params | `object` | A dictionary of embed params that will affect the delivery. Default includes `{ autoplay: true }` |
 | pageParams | `string[]` | Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`. |
 | events | `object` | Map of eko player events to listeners. |
@@ -37,13 +45,13 @@ import MyLoadingCover from "./MyLoadingCover";
 <EkoVideo id="AWLLK1" loadingCover={MyLoadingCover}/>
 ```
 
-[Working example](https://5fe370769d789f0021bf9442-nsefptgmww.chromatic.com/?path=/story/example-ekovideo--custom-loading-cover)
+[Working example](https://ekolabs.github.io/eko-react-sdk/?path=/story/example-ekovideo--custom-loading-cover)
 
 ### Using a custom out transition in a custom loading cover
 
 ![Custom transition in a custom loading cover](https://user-images.githubusercontent.com/3951311/103168637-98e0b400-483d-11eb-9a44-c39f29ed82b2.gif)
 
-[demo](https://5fe370769d789f0021bf9442-nsefptgmww.chromatic.com/?path=/story/example-ekovideo--custom-loading-cover-with-custom-transition)
+[demo](https://ekolabs.github.io/eko-react-sdk/?path=/story/example-ekovideo--custom-loading-cover-with-custom-transition)
 
 If you wish to have animate an out transition once the project is a available to play, be it a CSS animation or JS based - It's possible to do so using the `registerTransition` function passed on to every cover. This function receives a function which takes a `transitionComplete` callback function as a parameter (phew). The `transitionComplete()` should be called once the animation is completed and it's safe to unmount the cover element.
 
@@ -105,7 +113,7 @@ Example:
 let playerEventHandlers = {
     play: () => console.log("Video is playing"),
     pause: () => console.log("Video is paused"),
-    nodestart: node => console.log(`node ${node.id} has started playing`)
+    nodestart: node => console.log(`Node ${node.id} has started playing`)
 };
 <EkoVideo id="AWLLK1" events={playerEventHandlers}/>
 ```

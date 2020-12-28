@@ -20,6 +20,7 @@ export function useCovers({loadingCover,
     let hideLoadingCover = useCallback(() => {
         let transition = transitionOut.current
         if (transition.transitionFunction){
+            // transition might already be running, no need to run again
             if (!transition.isRunning) {
                 let callback = () => {
                     transition.isRunning = false;
@@ -73,9 +74,9 @@ export function useCovers({loadingCover,
         // Reset autoplayTimedOut
         setAutoplayTimedOut(false);
 
-        // If we're currently showing the loading cover,
+        // if we haven't started playing the video yet
         // hide the loading cover and display the play cover instead.
-        if (shouldShowLoadingCover || (transitionOut.current.transitionFunction && !transitionOut.current.hasEnded)) {
+        if (playerLoadingState.state !== 'started') {
             hideLoadingCover();
             setShouldShowPlayCover(true);
         }
