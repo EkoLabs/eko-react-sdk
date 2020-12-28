@@ -8,7 +8,7 @@ Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/
 ## Simple usecase
 
 ```jsx
-<EkoVideo projectId="VyYYl0"/>
+<EkoVideo id="VyYYl0"/>
 ```
 
 ## Props
@@ -16,7 +16,7 @@ Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/
 
 | Prop           | Type           | Description  |
 | :-------------: |:--------------:| :------------|
-| projectId | `string` | The eko project ID to load. Changing this prop will cause a reload. |
+| id | `string` | The eko project ID to load. Changing this prop will cause a reload. |
  | embedAPI | `embedAPI` | eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used. |
  | env | `string` | The eko env |
  | params | `object` | A dictionary of embed params that will affect the delivery. Default include `{autoplay: true}` |
@@ -39,7 +39,7 @@ By default every project loads with the default eko experience cover. This cover
 
 ```jsx
 import MyLoadingCover from "./MyLoadingCover";
-<EkoVideo projectId="AWLLK1" loadingCover={MyLoadingCover}/>
+<EkoVideo id="AWLLK1" loadingCover={MyLoadingCover}/>
 ```
 
 
@@ -93,7 +93,7 @@ function myEkoVideo(){
 
     return (
         <div>
-            <EkoVideo projectId="AWLLK1" onPlayerInit={onPlayerInit}/>
+            <EkoVideo id="AWLLK1" onPlayerInit={onPlayerInit}/>
             <button onClick={ () =>  ekoPlayer.current.play()}>toggle play/pause</>
         </div>
     )
@@ -114,6 +114,6 @@ let playerEventHandlers ={
     pause: () => console.log("Video is paused"),
     nodestart: node => console.log(`node ${node.id} has started playing`)
 }
-<EkoVideo projectId="AWLLK1" events={playerEventHandlers}/>
+<EkoVideo id="AWLLK1" events={playerEventHandlers}/>
 
 ```

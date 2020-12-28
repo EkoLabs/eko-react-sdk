@@ -18,7 +18,7 @@ import {getRenderable} from "./utils";
  * @member module:components#EkoVideo
  * @type {React.Component}
  * @param {object} props
- * @param {string} props.projectId - The eko project ID to load. Changing this prop will cause a reload.
+ * @param {string} props.id - The eko project ID to load. Changing this prop will cause a reload.
  * @param {embedAPI} props.embedAPI - eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used.
  * @param {string} props.env - The eko env
  * @param {object} props.params - A dictionary of embed params that will affect the delivery. Default includes `{autoplay: true}`
@@ -40,7 +40,7 @@ import {getRenderable} from "./utils";
  *
  */
 export function EkoVideo({
-                      projectId,
+                      id,
                       embedAPI = "1.0",
                       env,
                       params = {},
@@ -93,7 +93,7 @@ export function EkoVideo({
         setPlayerLoadingState({state: 'loading'});
 
         // Build loading options and load required project.
-        playerRef.current.load(projectId, {
+        playerRef.current.load(id, {
             cover: loadingCover ? onCoverStateChanged : undefined,
             env,
             params,
@@ -104,7 +104,7 @@ export function EkoVideo({
         // We return the removeEventListeners from the useEffect function so it'll be called when the component unmounts, or when deps change.
         return () => removeEventListeners(playerRef.current, events);
 
-    }, [playerRef.current, projectId]);
+    }, [playerRef.current, id]);
 
 
     // Render unsupportedCover if browser does not support eko videos
@@ -139,7 +139,7 @@ const removeEventListeners = (player, events) => {
 };
 
 EkoVideo.propTypes = {
-    projectId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     embedAPI: PropTypes.string,
     env: PropTypes.string,
     params: PropTypes.objectOf(
