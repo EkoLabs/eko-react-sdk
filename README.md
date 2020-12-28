@@ -5,6 +5,14 @@
 
 Demo (Storybook) available [here](https://ekolabs.github.io/eko-react-sdk/)
 
+## Installation
+
+From your favorite CLI tool:
+
+```
+npm install @ekolabs/eko-react-sdk
+```
+
 ## Simple usecase
 
 ```jsx
