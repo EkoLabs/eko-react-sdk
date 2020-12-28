@@ -37,6 +37,7 @@ export default {
 
 const defaultArgs = {
     id: "VyYYl0",
+    chromaticId: "AErPj3",
     params: {
         clearcheckpoints: true,
         autoplay: true
