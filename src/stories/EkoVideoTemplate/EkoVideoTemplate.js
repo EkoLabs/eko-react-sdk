@@ -15,7 +15,10 @@ export default function EkoVideoTemplate(args, context){
         }
 
         // use the null engine so that tests don't actually load video or audio
-        args.params.forceTech = "null";
+        args.params = {
+            ...args.params,
+            forceTech: "null"
+        }
 
         // without this player.once can't register to "nodestart" event
         args.events = {nodestart: ()=>{}}
