@@ -7,7 +7,7 @@ Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/
 
 ## Simple usecase
 
-```
+```jsx
 <EkoVideo projectId="VyYYl0"/>
 ```
 
@@ -37,7 +37,7 @@ Storybook available [here](https://main--5fe370769d789f0021bf9442.chromatic.com/
 
 By default every project loads with the default eko experience cover. This cover gets removed to display the video itself (if autoplay is available) or the play cover if it's not. You can supply your own loading cover component:
 
-```
+```jsx
 import MyLoadingCover from "./MyLoadingCover";
 <EkoVideo projectId="AWLLK1" loadingCover={MyLoadingCover}/>
 ```
@@ -58,7 +58,7 @@ Note that if you don't call `transitionComplete()`, the cover component will not
 
 Here's an example implementation using a CSS animation:
 
-```
+```jsx
 export default function MyLoadingCoverWithCustomTransition(props){
     let loadingCoverRef = useRef()
 
@@ -84,7 +84,7 @@ To get a reference to the underlying [`EkoPlayer`](https://github.com/EkoLabs/ek
 
 Example implementation saving a reference to the EkoPlayer using the useRef hook:
 
-```
+```jsx
 import { useRef } from "react";
 
 function myEkoVideo(){
@@ -108,7 +108,7 @@ It's a dictionary of [player event names](https://developer.eko.com/api/Interlud
 
 Example:
 
-```
+```jsx
 let playerEventHandlers ={
     play: () => console.log("Video is playing"),
     pause: () => console.log("Video is paused"),
