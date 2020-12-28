@@ -37,7 +37,6 @@ export default {
 
 const defaultArgs = {
     id: "VyYYl0",
-    chromaticId: "AErPj3",
     params: {
         clearcheckpoints: true,
         autoplay: true
@@ -57,6 +56,7 @@ const defaultParams = {
 export const Simple = EkoVideoTemplate.bind({});
 Simple.args = {
     ...defaultArgs,
+    chromaticId: "M48nxx"
 };
 Simple.parameters ={
     ...defaultParams
