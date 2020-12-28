@@ -13,7 +13,7 @@ on:
 
 # List of jobs
 jobs:
-  chromatic-deployment:
+  visual-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -29,7 +29,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: false
   build-docs:
-    needs: chromatic-deployment
+    needs: visual-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -46,7 +46,7 @@ jobs:
           FOLDER: storybook-static # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
   publish:
-    needs: chromatic-deployment
+    needs: visual-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
