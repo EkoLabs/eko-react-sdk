@@ -3,9 +3,11 @@
 # Workflow name
 name: 'Build and publish'
 
-# Event for the workflow
+
 on:
-  push
+  # Trigger the workflow on push
+  # but only for the main branch
+  push:
     branches:
       - main
 
