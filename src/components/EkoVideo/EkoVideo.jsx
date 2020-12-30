@@ -23,7 +23,7 @@ import {getRenderable} from "./utils";
  * @param {string} props.env - The eko env
  * @param {object} props.params - A dictionary of embed params that will affect the delivery. Default includes `{autoplay: true}`
  * @param {string[]} props.pageParams - Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`.
- * @param {object} props.events - Map of eko player events to listeners.
+ * @param {object | string[]} props.events - A list of events that should be forwarded to the frame from the player OR a map of eko player events to listeners.
  * @param {ReactElement| ElementType} props.loadingCover - A React element that will be displayed while video is loading.
  * If not given, will show eko's default loading animation.
  * @param {ReactElement | ElementType } props.playCover - A React element that will be displayed when a custom loading cover (i.e. props.loadingCover) is given, and player does not autoplay.
@@ -87,8 +87,20 @@ export function EkoVideo({
             return;
         }
 
-        // Assign event listeners according to the events map.
-        addEventListeners(playerRef.current, events);
+        let eventList = events || [];
+        let boundHandlers = {};
+
+        // events can be either an array of event names an on object of handlers.
+        // In the latter case, assign event listeners according to the events map.
+        if (typeof events === "object" && !Array.isArray(events)) {
+            Object.keys(events).forEach(eventName => {
+                let boundHandler = events[eventName].bind(playerRef.current);
+                boundHandlers[eventName] = boundHandlers[eventName] || [];
+                boundHandlers[eventName].push(boundHandler)
+                playerRef.current.on(eventName, boundHandler);
+            })
+            eventList = Object.keys(events);
+        }
 
         setPlayerLoadingState({state: 'loading'});
 
@@ -97,12 +109,18 @@ export function EkoVideo({
             cover: loadingCover ? onCoverStateChanged : undefined,
             env,
             params,
-            events: (events && Object.keys(events)) || [],
+            events: eventList,
             pageParams: pageParams || [],
         });
 
         // We return the removeEventListeners from the useEffect function so it'll be called when the component unmounts, or when deps change.
-        return () => removeEventListeners(playerRef.current, events);
+        return () => {
+            if (typeof events === "object" && !Array.isArray(events)) {
+                Object.keys(boundHandlers).forEach( eventName => {
+                    boundHandlers[eventName].forEach( handler => playerRef.current.off(eventName, handler));
+                })
+            }
+        };
 
     }, [playerRef.current, id]);
 
@@ -122,22 +140,6 @@ export function EkoVideo({
     );
 }
 
-const addEventListeners = (player, events) => {
-    if (events) {
-        Object.keys(events).forEach((event) => {
-            player.on(event, events[event]);
-        })
-    }
-};
-
-const removeEventListeners = (player, events) => {
-    if (events) {
-        Object.keys(events).forEach((event) => {
-            player.off(event, events[event]);
-        })
-    }
-};
-
 EkoVideo.propTypes = {
     id: PropTypes.string.isRequired,
     embedAPI: PropTypes.string,
@@ -150,7 +152,7 @@ EkoVideo.propTypes = {
         ])
     ),
     pageParams: PropTypes.arrayOf(PropTypes.string),
-    events: PropTypes.objectOf(PropTypes.func),
+    events: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.object]),
     loadingCover: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
     playCover: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
     unsupportedCover:  PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),

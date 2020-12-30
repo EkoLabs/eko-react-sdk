@@ -20,16 +20,23 @@ export default function EkoVideoTemplate(args, context){
             forceTech: "null"
         }
 
-        // without this player.once can't register to "nodestart" event
+        let seekedToPause = false;
+
+        function onPlayStart(){
+            if (!seekedToPause) {
+                seekedToPause = true;
+                this.invoke("currentTime", 1);
+            }
+        }
+
         args.events = {
-            nodestart: ()=>{},
-            seeked: ()=>{},
+            "nodestarted": onPlayStart,
+            "ekoshell.playing": onPlayStart, // special handling for ekoshell 1 issue
+            "seeked": function(){
+                this.pause();
+            }
         }
-        args.onPlayerInit = player => {
-            // always pause on the one second mark  to achieve consistent visual regression test results
-            player.once("nodestart", () => player.invoke("currentTime", 1));
-            player.once("seeked", () => player.pause());
-        }
+
     }
     let ekoVideoEl = <EkoVideo {...args} />;
 

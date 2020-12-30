@@ -25,7 +25,7 @@ npm install @ekolabs/eko-react-sdk
 | id | `string` | The eko video ID to load. Changing this prop will cause a reload. |  
 | params | `object` | A dictionary of embed params that will affect the delivery. Default includes `{ autoplay: true }` |
 | pageParams | `string[]` | Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`. |
-| events | `object` | Map of eko player events to listeners. |
+| events | `object / string[]` | A (1) list of events that should be forwarded to the frame from the player OR (2) a map of eko player events to listeners. In the case of 2, the handler function will be called with the player instance as the `this` context 
 | loadingCover | `ReactElement / ElementType` | A React element that will be displayed while video is loading. If not given, will show eko's default loading animation. |
 | playCover | `ReactElement / ElementType` | A React element that will be displayed when a custom loading cover (i.e. props.loadingCover) is given, and player does not autoplay. Clicks must pass through this element (i.e. using `pointer-events: none`) so they are triggered on the iframe behind this element and playback can begin. If not given, will display a default play cover. |
 | unsupportedCover | `ReactElement / elementType` | A React element that will be displayed in case eko videos are not supported on current environment/browser. If not given, will display a default unsupportedCover message. |
