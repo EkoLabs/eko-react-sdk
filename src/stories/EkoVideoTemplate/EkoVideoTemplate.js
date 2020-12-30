@@ -22,14 +22,20 @@ export default function EkoVideoTemplate(args, context){
 
         // without this player.once can't register to "nodestart" event
         args.events = {
-            nodestart: ()=>{},
+            timeupdate: ()=>{},
         }
         args.onPlayerInit = player => {
             // always pause on the one second mark  to achieve consistent visual regression test results
-            player.once("nodestart", () => {
-                player.pause();
-                player.invoke("currentTime", 1)
-            });
+            // using timeupdate because calling 'pause' on nodestart is not reliable
+            function onTimeUpdate(time){
+                if (time > 0.5) {
+                    player.off("timeupdate", onTimeUpdate)
+                    player.pause();
+                    player.invoke("currentTime", 1)
+                }
+            }
+
+            player.on("timeupdate", onTimeUpdate);
         }
     }
     let ekoVideoEl = <EkoVideo {...args} />;
