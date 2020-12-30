@@ -21,12 +21,14 @@ export default function EkoVideoTemplate(args, context){
         }
 
         // without this player.once can't register to "nodestart" event
-        args.events = {nodestart: ()=>{}}
+        args.events = {
+            nodestart: ()=>{},
+        }
         args.onPlayerInit = player => {
             // always pause on the one second mark  to achieve consistent visual regression test results
             player.once("nodestart", () => {
-                player.invoke("currentTime", 1)
                 player.pause();
+                player.invoke("currentTime", 1)
             });
         }
     }
