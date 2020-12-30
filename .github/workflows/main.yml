@@ -23,7 +23,6 @@ jobs:
       - run: npm install
       - run: npm test
   visual-tests:
-    needs: integration-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -39,7 +38,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: false
   build-docs:
-    needs: visual-tests
+    needs: [visual-tests, integration-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -56,7 +55,7 @@ jobs:
           FOLDER: storybook-static # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
   publish:
-    needs: visual-tests
+    needs: [visual-tests, integration-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
