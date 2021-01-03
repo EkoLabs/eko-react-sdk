@@ -4,7 +4,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import generatePackageJson from 'rollup-plugin-generate-package-json'
 import json from '@rollup/plugin-json';
 import scss from 'rollup-plugin-scss'
-import {uglify} from 'rollup-plugin-uglify'
+import { terser } from "rollup-plugin-terser";
+
 
 
 export default {
@@ -29,12 +30,12 @@ export default {
                 version: pkg.version,
                 peerDependencies: {
                     "react": "^16.13.0",
-                    "react-dom:":"^16.13.0"
+                    "react-dom":"^16.13.0"
                 }
             })
         }),
         scss(),
         json(),
-        // uglify(),
+        terser()
     ]
 };
