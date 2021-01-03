@@ -15,6 +15,7 @@ npm install @ekolabs/eko-react-sdk
 ## Simple usecase
 
 ```jsx
+import EkoVideo from '@ekolabs/eko-react-sdk';
 <EkoVideo id="VyYYl0"/>
 ```
 
