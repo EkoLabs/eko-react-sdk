@@ -16,9 +16,12 @@ npm install @ekolabs/eko-react-sdk
 
 ```jsx
 import { EkoVideo } from '@ekolabs/eko-react-sdk';
-
-<EkoVideo id="VyYYl0"/>
+<div className="myVideoContainer">
+    <EkoVideo id="VyYYl0"/>
+</div>
 ```
+
+***EkoVideo will expand and [adjust](https://developer.eko.com/docs/sizing_and_aspect_ratio.html) to fill the space available in `myVideoContainer`***
 
 ## Props
 
