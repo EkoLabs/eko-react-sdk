@@ -1,3 +1,4 @@
+import React from 'react';
 import "./DefaultPlayCover.scss"
 
 export default function DefaultPlayCover(){
