@@ -17,7 +17,11 @@ export default {
     external: ['react', 'react-dom'],
     plugins: [
         resolve({ extensions: ['.jsx', '.js'] }),
-        commonjs(),
+        commonjs({
+            namedExports: {
+                'node_modules/react-is/index.js': ['isValidElementType', 'isElement']
+            }
+        }),
         babel({
             extensions: ['.jsx', '.js'],
             exclude: 'node_modules/**'
@@ -36,6 +40,6 @@ export default {
         }),
         scss(),
         json(),
-        terser()
+        terser(),
     ]
 };
