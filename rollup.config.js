@@ -3,7 +3,7 @@ import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import generatePackageJson from 'rollup-plugin-generate-package-json'
 import json from '@rollup/plugin-json';
-import scss from 'rollup-plugin-scss'
+import postcss from "rollup-plugin-postcss";
 import { terser } from "rollup-plugin-terser";
 import copy from "rollup-plugin-copy-assets";
 
@@ -47,7 +47,7 @@ export default {
                 "../LICENSE"
             ],
         }),
-        scss(),
+        postcss(),
         json(),
         terser(),
     ]
