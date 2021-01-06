@@ -50,7 +50,7 @@
     "url": "git+https://github.com/EkoLabs/eko-react-sdk.git"
   },
   "scripts": {
-    "chromatic": "n px chromatic --project-token 0st0qnswhfsk",
+    "chromatic": "npx chromatic --project-token 0st0qnswhfsk",
     "test": "cross-env NODE_ENV=testing jest",
     "storybook": "start-storybook -p 6006",
     "dev": "rollup -c -w",
