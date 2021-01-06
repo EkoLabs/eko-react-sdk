@@ -38,6 +38,9 @@ export default function EkoVideoTemplate(args, context){
         }
 
     }
+
+    args.expandToFillContainer = true;
+
     let ekoVideoEl = <EkoVideo {...args} />;
 
     let ekoVideoDocsEl = (

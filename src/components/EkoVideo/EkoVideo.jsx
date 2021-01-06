@@ -24,6 +24,7 @@ import {getRenderable} from "./utils";
  * @param {object} props.params - A dictionary of embed params that will affect the delivery. Default includes `{autoplay: true}`
  * @param {string[]} props.pageParams - Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`.
  * @param {object | string[]} props.events - A list of events that should be forwarded to the frame from the player OR a map of eko player events to listeners.
+ * @param {boolean} [props.expandToFillContainer=false] - if true, the eko component styling will be set to fill its container. Otherwise the intrinsic size will be 100% width with a height ratio of 16:9.
  * @param {ReactElement| ElementType} props.loadingCover - A React element that will be displayed while video is loading.
  * If not given, will show eko's default loading animation.
  * @param {ReactElement | ElementType } props.playCover - A React element that will be displayed when a custom loading cover (i.e. props.loadingCover) is given, and player does not autoplay.
@@ -46,6 +47,7 @@ export function EkoVideo({
                       params = {},
                       pageParams,
                       events,
+                      expandToFillContainer,
                       loadingCover,
                       playCover,
                       unsupportedCover = DefaultUnsupportedMessage,
@@ -130,13 +132,17 @@ export function EkoVideo({
         return getRenderable(unsupportedCover);
     }
 
+    let containerClassNames = ["eko_component_container"];
+    containerClassNames.push(expandToFillContainer?"expand":"intrinsicSize")
+
+
     // Render eko video
     return (
-        <>
+        <div className={containerClassNames.join(" ")}>
             {/* Render div that will contain the eko video iframe */}
-            <div className="eko_component_container" ref={ekoProjectContainer} />
+            <div className="eko_video_container" ref={ekoProjectContainer} />
             {covers}
-        </>
+        </div>
     );
 }
 
@@ -153,6 +159,7 @@ EkoVideo.propTypes = {
     ),
     pageParams: PropTypes.arrayOf(PropTypes.string),
     events: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.object]),
+    expandToFillContainer: PropTypes.bool,
     loadingCover: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
     playCover: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
     unsupportedCover:  PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),

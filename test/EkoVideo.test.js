@@ -121,4 +121,18 @@ describe('EkoVideo', () => {
             expect(playerInstance.off).toHaveBeenCalledWith("nodestart", expect.any(Function));
         })
     });
+
+    test('expandToFillContainer: false should output the right class name', () => {
+        let component = mount(<EkoVideo id="123"/>);
+        expect(component.find('.eko_component_container').hasClass('intrinsicSize')).toEqual(true);
+        expect(component.find('.eko_component_container').hasClass('expand')).toEqual(false);
+
+    });
+
+    test('expandToFillContainer: true should output the right class name', () => {
+        let component = mount(<EkoVideo id="123" expandToFillContainer={true}/>);
+        expect(component.find('.eko_component_container').hasClass('intrinsicSize')).toEqual(false);
+        expect(component.find('.eko_component_container').hasClass('expand')).toEqual(true);
+
+    });
 });
