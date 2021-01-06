@@ -34,6 +34,7 @@ export default {
                 main: 'bundles/bundle.js',
                 version: pkg.version,
                 description: pkg.description,
+                homepage: pkg.homepage,
                 peerDependencies: {
                     "react": "^16.13.0",
                     "react-dom":"^16.13.0"
