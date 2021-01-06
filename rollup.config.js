@@ -5,6 +5,7 @@ import generatePackageJson from 'rollup-plugin-generate-package-json'
 import json from '@rollup/plugin-json';
 import scss from 'rollup-plugin-scss'
 import { terser } from "rollup-plugin-terser";
+import copy from "rollup-plugin-copy-assets";
 
 
 
@@ -38,6 +39,12 @@ export default {
                     "react-dom":"^16.13.0"
                 }
             })
+        }),
+        copy({
+            assets: [
+                "../README.md",
+                "../LICENSE"
+            ],
         }),
         scss(),
         json(),
