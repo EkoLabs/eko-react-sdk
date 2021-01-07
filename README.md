@@ -27,7 +27,7 @@ import { EkoVideo } from '@ekolabs/eko-react-sdk';
 | :-------------: |:--------------:| :------------|
 | id | `string` | The eko video ID to load. Changing this prop will cause a reload. |  
 | params | `object` | A dictionary of embed params that will affect the delivery. Default includes `{ autoplay: true }` |
-| pageParams | `string[]` | Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`. |
+| excludePropagatedParams | `string[]` | By default, all query string params present on the page will be forwarded onto the video iframe. In order to exclude params from being forwarded, you can supply an array of query param keys (strings or regexes) to list the params that should not be propagated. |
 | events | `object / string[]` | A (1) list of events that should be forwarded to the frame from the player OR (2) a map of eko player events to listeners. In the case of 2, the handler function will be called with the player instance as the `this` context 
 | expandToFillContainer | `boolean` | (default: false). If true, the eko component styling will be set to fill its container. Otherwise the intrinsic size will be 100% width with a height ratio of 16:9. In either case, actual video dimensions will be [adjusted](https://developer.eko.com/docs/sizing_and_aspect_ratio.html) to fit the component's dimensions. 
 | loadingCover | `ReactElement / ElementType` | A React element that will be displayed while video is loading. If not given, will show eko's default loading animation. |

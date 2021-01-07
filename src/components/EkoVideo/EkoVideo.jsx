@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import EkoPlayer from 'eko-js-sdk';
+import EkoPlayer from '@ekolabs/eko-js-sdk';
 import DefaultUnsupportedMessage from "../DefaultUnsupportedMessage/DefaultUnsupportedMessage";
 import "./EkoVideo.scss";
 import {useCovers} from "./useCovers";
@@ -22,7 +22,7 @@ import {getRenderable} from "./utils";
  * @param {embedAPI} props.embedAPI - eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used.
  * @param {string} props.env - The eko env
  * @param {object} props.params - A dictionary of embed params that will affect the delivery. Default includes `{autoplay: true}`
- * @param {string[]} props.pageParams - Any query params from the page url that should be forwarded to the iframe. Can supply regex and strings. By default, the following query params will automatically be forwarded: `autoplay, debug, utm_*, headnodeid`.
+ * @param {string[]} props.excludePropagatedParams - By default, all query string params present on the page will be forwarded onto the video iframe. In order to exclude params from being forwarded, you can supply an array of query param keys (strings or regexes) to list the params that should not be propagated.
  * @param {object | string[]} props.events - A list of events that should be forwarded to the frame from the player OR a map of eko player events to listeners.
  * @param {boolean} [props.expandToFillContainer=false] - if true, the eko component styling will be set to fill its container. Otherwise the intrinsic size will be 100% width with a height ratio of 16:9.
  * @param {ReactElement| ElementType} props.loadingCover - A React element that will be displayed while video is loading.
@@ -45,7 +45,7 @@ export function EkoVideo({
                       embedAPI = "1.0",
                       env,
                       params = {},
-                      pageParams,
+                      excludePropagatedParams,
                       events,
                       expandToFillContainer,
                       loadingCover,
@@ -112,7 +112,7 @@ export function EkoVideo({
             env,
             params,
             events: eventList,
-            pageParams: pageParams || [],
+            excludePropagatedParams: excludePropagatedParams || [],
         });
 
         // We return the removeEventListeners from the useEffect function so it'll be called when the component unmounts, or when deps change.
@@ -157,7 +157,7 @@ EkoVideo.propTypes = {
             PropTypes.number
         ])
     ),
-    pageParams: PropTypes.arrayOf(PropTypes.string),
+    excludePropagatedParams: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)])),
     events: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.object]),
     expandToFillContainer: PropTypes.bool,
     loadingCover: PropTypes.oneOfType([PropTypes.elementType, PropTypes.element]),
@@ -166,4 +166,3 @@ EkoVideo.propTypes = {
     waitForAutoplayTimeout: PropTypes.number,
     onPlayerInit: PropTypes.func,
 };
-
