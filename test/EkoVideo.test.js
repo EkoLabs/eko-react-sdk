@@ -7,7 +7,7 @@ import {EkoVideo} from "../src";
 
 const mockLoad = jest.fn();
 
-jest.mock('eko-js-sdk', () => {
+jest.mock('@ekolabs/eko-js-sdk', () => {
     const PlayerMock = jest.fn().mockImplementation(() => {
         // a poor man's event handler
         let eventHandlers = {};
@@ -70,6 +70,18 @@ describe('EkoVideo', () => {
         );
 
     });
+
+    test('excludePropagatedParams prop accepts an array of strings and RegExps and passes it eko-js-sdk', () => {
+        let excludePropagatedParams = [/utm_.*/, 'coolio'];
+        mount(<EkoVideo id="123" excludePropagatedParams={excludePropagatedParams} />);
+
+        expect(mockLoad).toHaveBeenCalledWith("123",
+            expect.objectContaining({
+                excludePropagatedParams
+            })
+        );
+    });
+
 
 
     test('Registered event handlers in eko-js-sdk should be called with the right params', () => {
