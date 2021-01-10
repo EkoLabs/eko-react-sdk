@@ -10,7 +10,7 @@ export default {
     argTypes: {
         id: {},
         params: { control: { disable: true } },
-        pageParams: { control: { disable: true } },
+        excludePropagatedParams: { control: { disable: true } },
         events: { control: { disable: true } },
         loadingCover: { control: { disable: true } },
         playCover: { control: { disable: true } },
