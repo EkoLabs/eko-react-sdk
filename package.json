@@ -5,7 +5,7 @@
   "main": "dist/bundles/bundle.js",
   "homepage": "https://ekolabs.github.io/eko-react-sdk/",
   "dependencies": {
-    "@ekolabs/eko-js-sdk": "0.0.12",
+    "@ekolabs/eko-js-sdk": "0.0.13",
     "prop-types": "^15.7.2",
     "react-is": "^17.0.1"
   },
