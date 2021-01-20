@@ -44,6 +44,7 @@ export function EkoVideo({
                       id,
                       embedAPI = "1.0",
                       env,
+                      clientSideParams,
                       params = {},
                       excludePropagatedParams,
                       events,
@@ -109,6 +110,7 @@ export function EkoVideo({
         // Build loading options and load required project.
         playerRef.current.load(id, {
             cover: loadingCover ? onCoverStateChanged : undefined,
+            clientSideParams,
             env,
             params,
             events: eventList,
@@ -150,6 +152,7 @@ EkoVideo.propTypes = {
     id: PropTypes.string.isRequired,
     embedAPI: PropTypes.string,
     env: PropTypes.string,
+    clientSideParams: PropTypes.object,
     params: PropTypes.objectOf(
         PropTypes.oneOfType([
             PropTypes.string,
