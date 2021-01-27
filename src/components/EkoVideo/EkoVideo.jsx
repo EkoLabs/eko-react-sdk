@@ -6,6 +6,8 @@ import "./EkoVideo.scss";
 import {useCovers} from "./useCovers";
 import {getRenderable} from "./utils";
 
+const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend'];
+
 // TODO
 // ====
 //
@@ -113,7 +115,7 @@ export function EkoVideo({
             clientSideParams,
             env,
             params,
-            events: eventList,
+            events: [...eventList, ...DEFAULT_EVENTS],
             excludePropagatedParams: excludePropagatedParams || [],
         });
 
