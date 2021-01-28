@@ -19,8 +19,8 @@ export function EkoExternalSubtitles({player, style}) {
     }, [player]);
     return (
         <div role= "Subtitles" className="eko_subtitles_container" style={{pointerEvents: 'none'}}>
-            {visible && text && <div className={`eko_subtitles_div`}>
-                <span style={style}>{text}</span>
+            {visible && text && <div className={`eko_subtitles_div`} style={style}>
+                <span>{text}</span>
             </div>}
         </div>
     );

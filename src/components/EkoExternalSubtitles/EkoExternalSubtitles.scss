@@ -1,34 +1,5 @@
 .eko_subtitles_div {
-    max-width: 90%;
-    box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.5);
-    text-align: center;
-    padding: 2px 4px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     &.rtl {
         direction: rtl;
     }
-
-    span {
-        color: #fff;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 1.25;
-        white-space: pre-line;
-    }
-}
-
-.eko_subtitles_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-    margin: 0 auto;
-    z-index: 1;
 }
