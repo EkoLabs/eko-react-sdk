@@ -1,10 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import "./EkoExternalSubtitles.scss";
+import React, {useEffect, useState} from 'react';
+import "./EkoSubtitles.scss";
 // https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
 const RTL_LANGUAGES = ['ar', 'arc', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi'];
 const AD_LANGUAGES = ['en-US-AD'];
 
-export function EkoExternalSubtitles({player, style}) {
+export function EkoSubtitles({player, style}) {
+    // TODO: Do I need to useRef() or useState() for the player?
+
     const [visible, setVisible] = useState(false);
     const [text, setText] = useState('');
     const [effectiveLang, setEffectiveLang] = useState('');
