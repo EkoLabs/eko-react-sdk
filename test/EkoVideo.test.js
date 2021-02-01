@@ -53,7 +53,7 @@ describe('EkoVideo', () => {
 
         expect(mockLoad).toHaveBeenCalledWith("123",
             expect.objectContaining({
-                events: ["nodestart"]
+                events: expect.arrayContaining(["nodestart"])
             })
         );
 
@@ -65,7 +65,7 @@ describe('EkoVideo', () => {
 
         expect(mockLoad).toHaveBeenCalledWith("123",
             expect.objectContaining({
-                events: ["nodestart"]
+                events: expect.arrayContaining(["nodestart"])
             })
         );
 
