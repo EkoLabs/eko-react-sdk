@@ -15,17 +15,20 @@ export function EkoSubtitles({player, style}) {
         if (!player) {
             return;
         }
-        const onVisibilityChange = (isVisible) => { setVisible(isVisible); };
-        const onSubStart = (subObj) => { setText(subObj.text); };
-        const onSubEnd = (subObj) => { setText(''); };
-        const onLangChange = (effectiveLanguage) => { setEffectiveLang(effectiveLanguage); };
+        const onSubtitlesInit = () => player.invoke('subtitles.mode', 'proxy');
+        const onVisibilityChange = (isVisible) =>  setVisible(isVisible);
+        const onSubStart = (subObj) =>  setText(subObj.text);
+        const onSubEnd = (subObj) =>  setText('');
+        const onLangChange = (effectiveLanguage) =>  setEffectiveLang(effectiveLanguage);
 
+        player.on('plugininitsubtitles', onSubtitlesInit);
         player.on('subtitles.visibilitychange', onVisibilityChange);
         player.on('subtitles.substart', onSubStart);
         player.on('subtitles.subend', onSubEnd);
         player.on('subtitles.effectivelanguagechange', onLangChange);
         
         return () => {
+            player.off('plugininitsubtitles', onSubtitlesInit);
             player.off('subtitles.visibilitychange', onVisibilityChange);
             player.off('subtitles.substart', onSubStart);
             player.off('subtitles.subend', onSubEnd);

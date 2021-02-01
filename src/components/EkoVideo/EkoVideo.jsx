@@ -6,7 +6,7 @@ import "./EkoVideo.scss";
 import {useCovers} from "./useCovers";
 import {getRenderable} from "./utils";
 
-const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange'];
+const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininitsubtitles'];
 
 // TODO
 // ====

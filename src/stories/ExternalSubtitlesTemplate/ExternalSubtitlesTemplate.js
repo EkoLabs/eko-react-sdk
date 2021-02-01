@@ -8,8 +8,8 @@ export default function ExternalSubtitlesTemplate(args, context){
     let ekoVideo = EkoVideoTemplate(args, context);
     let style = args.style || {};
     return (
-        <div class="eko-subtitles-test-container" style={{height: 100 + '%', width: 100 + '%'}}>
-            <div class="eko-video-test-container" style={{height: 80 + '%'}}>
+        <div style={{height: 100 + '%', width: 100 + '%'}}>
+            <div style={{height: 80 + '%'}}>
                 {ekoVideo}
             </div>
             <EkoSubtitles player={playerRef} style={style}/>

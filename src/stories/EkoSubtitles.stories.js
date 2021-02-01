@@ -27,9 +27,10 @@ function(props){
     }
 };
 
-
+// TODO: remove env once proxy mode feature has been released
 const defaultArgs = {
     id: "MYjeJr",
+    env: 'ekoshell',
     params: {
         clearcheckpoints: true,
         autoplay: true
