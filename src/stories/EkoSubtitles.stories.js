@@ -31,10 +31,11 @@ function(props){
 const defaultArgs = {
     id: "MYjeJr",
     env: 'ekoshell',
+    seekTime: 2,
     params: {
         clearcheckpoints: true,
         autoplay: true
-    }
+    },
 };
 
 const defaultParams = {
@@ -49,8 +50,10 @@ const defaultParams = {
 
 export const SimpleSubtitles = ExternalSubtitlesTemplate.bind({});
 SimpleSubtitles.args = {
-    ...defaultArgs
+    ...defaultArgs,
+    style: {background: 'black', color: 'white', padding: '10px 30px'}
 }
+
 SimpleSubtitles.parameters ={
     ...defaultParams,
     docs: { description: { story: 'Show subtitles underneath the player, no styling.'} },
@@ -59,7 +62,7 @@ SimpleSubtitles.parameters ={
 export const StyledSubtitles = ExternalSubtitlesTemplate.bind({});
 StyledSubtitles.args = {
     ...defaultArgs,
-    style: {color: 'red', font: '18px Arial'}
+    style: {background: 'black', color: 'red', padding: '10px 30px', font: '18px Arial'}
 }
 
 StyledSubtitles.parameters ={

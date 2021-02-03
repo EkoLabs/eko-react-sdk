@@ -3,9 +3,18 @@ import "./EkoSubtitles.scss";
 // https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
 const RTL_LANGUAGES = ['ar', 'arc', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi'];
 const AD_LANGUAGES = ['en-US-AD'];
-
+/**
+ * The EkoSubtitles React component displays the subtitles outside of the player.
+ *
+ * @export
+ * @member module:components#EkoSubtitles
+ * @type {React.Component}
+ * @param {object} props
+ * @param {object} props.player - An {@link https://github.com/EkoLabs/eko-js-sdk#ekoplayer|EkoPlayer} instance 
+ * @param {object} props.style - Used to style the subtitles component
+ *
+ */
 export function EkoSubtitles({player, style}) {
-    // TODO: Do I need to useRef() or useState() for the player?
 
     const [visible, setVisible] = useState(false);
     const [text, setText] = useState('');
@@ -43,10 +52,15 @@ export function EkoSubtitles({player, style}) {
     let ariaLiveValue = isAudioDescriptionLanguage ? 'polite' : null;
 
     return (
-        <div role= "Subtitles" style={style}>
-            {visible && text && <div className={`eko_subtitles_div ${rtl}`} aria-live={ariaLiveValue} >
+        <div role="Subtitles" style={style}>
+            {visible && text && <div className={`eko_subtitles_container ${rtl}`} aria-live={ariaLiveValue} >
                 <span>{text}</span>
             </div>}
         </div>
     );
 }
+
+EkoSubtitles.propTypes = {
+    player: PropTypes.object.isRequired,
+    style: PropTypes.object
+};
