@@ -5,7 +5,10 @@ import ExternalSubtitlesTemplate from "./ExternalSubtitlesTemplate/ExternalSubti
 export default {
     title: 'Example/EkoSubtitles',
     component: EkoSubtitles,
-    argTypes: {},
+    argTypes: {
+        player: {control: { disable: true }},
+        style: {}
+    },
     parameters: {
         docs: {
             // inlineStories: false,
