@@ -22,12 +22,11 @@ export function EkoSubtitles({style}) {
     const [text, setText] = useState('');
     const [effectiveLang, setEffectiveLang] = useState('');
     
-    // This is the only way I could detect if the context existed or not. Accessing EkoPlayerContext directly caused an error to be thrown
-    if (!useContext(EkoPlayerContext)) {
+    let context = useContext(EkoPlayerContext);
+    if (!context) {
         throw new Error('This component needs to be wrapped in a player context, but one was not found');
     }
-    const { playerState } = useContext(EkoPlayerContext);
-    let player = playerState && playerState.player;
+    let player = context && context.playerState && context.playerState.player;
     useEffect(() => {
         if (!player) {
             return;

@@ -67,11 +67,8 @@ export function EkoVideo({
                             playerLoadingState,
                             waitForAutoplayTimeout
     });
-    let context = {};
-    // This is the only way I could detect if the context existed or not. Accessing EkoPlayerContext directly caused an error to be thrown
-    if (useContext(EkoPlayerContext)) {
-        context = useContext(EkoPlayerContext);
-    }
+
+    let context = useContext(EkoPlayerContext);
     
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
@@ -87,7 +84,7 @@ export function EkoVideo({
             if (onPlayerInit){
                 onPlayerInit(playerRef.current);
             }
-            if (context.playerState) {
+            if (context && context.setPlayerState) {
                 context.setPlayerState({player: playerRef.current});
             }
         } else {
