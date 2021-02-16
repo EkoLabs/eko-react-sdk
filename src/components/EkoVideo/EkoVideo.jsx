@@ -1,10 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import EkoPlayer from '@ekolabs/eko-js-sdk';
 import DefaultUnsupportedMessage from "../DefaultUnsupportedMessage/DefaultUnsupportedMessage";
 import "./EkoVideo.scss";
 import {useCovers} from "./useCovers";
 import {getRenderable} from "./utils";
+import {EkoPlayerContext} from "../EkoPlayerContext/EkoPlayerContext";
 
 const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininitsubtitles'];
 
@@ -66,7 +67,12 @@ export function EkoVideo({
                             playerLoadingState,
                             waitForAutoplayTimeout
     });
-
+    let context = {};
+    // This is the only way I could detect if the context existed or not. Accessing EkoPlayerContext directly caused an error to be thrown
+    if (useContext(EkoPlayerContext)) {
+        context = useContext(EkoPlayerContext);
+    }
+    
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
         setPlayerLoadingState({state, params});
@@ -80,6 +86,9 @@ export function EkoVideo({
             playerRef.current = new EkoPlayer(ekoProjectContainer.current, embedAPI);
             if (onPlayerInit){
                 onPlayerInit(playerRef.current);
+            }
+            if (context.playerState) {
+                context.setPlayerState({player: playerRef.current});
             }
         } else {
             setIsSupported(false);

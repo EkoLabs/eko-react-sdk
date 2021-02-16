@@ -6,7 +6,6 @@ export default {
     title: 'Example/EkoSubtitles',
     component: EkoSubtitles,
     argTypes: {
-        player: {control: { disable: true }},
         style: {}
     },
     parameters: {
@@ -19,10 +18,11 @@ export default {
             source: {
                 code: `
 function(props){
-    [playerRef, setPlayerRef] = useState();
     return (
-        <EkoVideo onPlayerInit={player => setPlayerRef(player)} />
-        <EkoSubtitles player={playerRef} />
+        <EkoPlayerProvider>
+            <EkoVideo />
+            <EkoSubtitles />
+        </EkoPlayerProvider>
     )
 }`
             }
@@ -33,7 +33,6 @@ function(props){
 // TODO: remove env once proxy mode feature has been released
 const defaultArgs = {
     id: "MYjeJr",
-    env: 'ekoshell',
     seekTime: 2,
     params: {
         clearcheckpoints: true,
@@ -75,7 +74,7 @@ StyledSubtitles.parameters ={
             story: 'Show subtitles underneath the player, with some styling.'
         },
         source: {
-            code: `<EkoSubtitles player={playerRef} style={color: "red", font: "18px Arial"}/>` 
+            code: `<EkoSubtitles style={color: "red", font: "18px Arial"}/>` 
         }
     }
 }

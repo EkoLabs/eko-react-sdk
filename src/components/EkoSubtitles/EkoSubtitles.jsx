@@ -1,26 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import PropTypes from 'prop-types';
+import {EkoPlayerContext} from '../EkoPlayerContext/EkoPlayerContext';
 import "./EkoSubtitles.scss";
 // https://meta.wikimedia.org/wiki/Template:List_of_language_names_ordered_by_code
 const RTL_LANGUAGES = ['ar', 'arc', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi'];
 const AD_LANGUAGES = ['en-US-AD'];
 /**
- * The EkoSubtitles React component displays the subtitles outside of the player.
+ * The EkoSubtitles React component displays the subtitles outside of the player. If you are using this,
+ * you must wrap both the EkoVideo component and the EkoSubtitles component in an EkoPlayerProvider.
  *
  * @export
  * @member module:components#EkoSubtitles
  * @type {React.Component}
  * @param {object} props
- * @param {object} props.player - An {@link https://github.com/EkoLabs/eko-js-sdk#ekoplayer|EkoPlayer} instance 
  * @param {object} props.style - Used to style the subtitles component
  *
  */
-export function EkoSubtitles({player, style}) {
+export function EkoSubtitles({style}) {
 
     const [visible, setVisible] = useState(false);
     const [text, setText] = useState('');
     const [effectiveLang, setEffectiveLang] = useState('');
-
+    
+    // This is the only way I could detect if the context existed or not. Accessing EkoPlayerContext directly caused an error to be thrown
+    if (!useContext(EkoPlayerContext)) {
+        throw new Error('This component needs to be wrapped in a player context, but one was not found');
+    }
+    const { playerState } = useContext(EkoPlayerContext);
+    let player = playerState && playerState.player;
     useEffect(() => {
         if (!player) {
             return;
@@ -62,6 +69,5 @@ export function EkoSubtitles({player, style}) {
 }
 
 EkoSubtitles.propTypes = {
-    player: PropTypes.object.isRequired,
     style: PropTypes.object
 };
