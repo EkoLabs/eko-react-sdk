@@ -1,6 +1,6 @@
 {
   "name": "@ekolabs/eko-react-sdk",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A react component that embeds eko videos",
   "main": "dist/bundles/bundle.js",
   "homepage": "https://ekolabs.github.io/eko-react-sdk/",
