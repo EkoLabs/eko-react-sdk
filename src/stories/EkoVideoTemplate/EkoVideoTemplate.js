@@ -25,7 +25,7 @@ export default function EkoVideoTemplate(args, context){
         function onPlayStart(){
             if (!seekedToPause) {
                 seekedToPause = true;
-                this.invoke("currentTime", 1);
+                this.invoke("currentTime", args.seekTime || 1);
             }
         }
 

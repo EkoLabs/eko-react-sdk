@@ -85,7 +85,7 @@ export default function MyLoadingCoverWithCustomTransition(props){
 
 ### Interacting with the player
 
-To get a reference to the underlying [`EkoPlayer`](https://github.com/EkoLabs/eko-js-sdk#ekoplayerel) that's exposed by the `eko-js-sdk`, use `onPlayerInit`:
+To get a reference to the underlying [`EkoPlayer`](https://github.com/EkoLabs/eko-js-sdk#ekoplayerel) that's exposed by the `eko-js-sdk`, use `onPlayerInit` or use the `EkoPlayerContext`.
 
 Example implementation saving a reference to the EkoPlayer using the useRef hook:
 
@@ -106,6 +106,36 @@ function myEkoVideo() {
 }
 ```
 
+Example implementation using the `EkoPlayerContext` to access the player from different components:
+
+```jsx
+// MyPlayButton.jsx
+import { useContext } from "react";
+import { EkoPlayerContext } from "@ekolabs/eko-react-sdk";
+
+function MyPlayButton() {
+    const {playerState} = useContext(EkoPlayerContext);
+    return (
+        <button onClick={() =>  playerState.player.play()}>play</button>
+    );
+}
+```
+```jsx
+// MyEkoVideo.jsx
+import MyPlayButton from './PlayButton';
+import { EkoPlayerProvider, EkoVideo } from "@ekolabs/eko-react-sdk";
+
+function MyEkoVideo() {
+    return (
+        <div>
+            <EkoPlayerProvider>
+                <EkoVideo id="AWLLK1"/>
+                <MyPlayButton />
+            </EkoPlayerProvider>
+        </div>
+    );
+}
+```
 ### Listening to player events
 
 To listen and react to events originating in the eko player inside the iframe, use the `events` prop.
@@ -120,4 +150,25 @@ let playerEventHandlers = {
     nodestart: node => console.log(`Node ${node.id} has started playing`)
 };
 <EkoVideo id="AWLLK1" events={playerEventHandlers}/>
+```
+
+## External subtitles
+
+If necessary, you can render the subtitles outside of the player using the `EkoSubtitles` component. 
+
+### Props
+
+| Prop           | Type           | Description  |
+| :-------------: |:--------------:| :------------|
+| style | `object` | Used to style the subtitles element. |  
+
+**Note:** If you are using the `EkoSubtitles` component, you **must** also use `EkoPlayerProvider` so the subtitles component can access the player. See below for example usage.
+
+Example:
+
+```jsx
+<EkoPlayerProvider>
+    <EkoVideo id="AWLLK1"/>
+    <EkoSubtitles style = {{color: 'white', background: 'black'}}/>
+</EkoPlayerProvider>
 ```

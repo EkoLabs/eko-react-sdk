@@ -1,10 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import EkoPlayer from '@ekolabs/eko-js-sdk';
 import DefaultUnsupportedMessage from "../DefaultUnsupportedMessage/DefaultUnsupportedMessage";
 import "./EkoVideo.scss";
 import {useCovers} from "./useCovers";
 import {getRenderable} from "./utils";
+import {EkoPlayerContext} from "../EkoPlayerContext/EkoPlayerContext";
+
+const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininitsubtitles'];
 
 // TODO
 // ====
@@ -65,6 +68,8 @@ export function EkoVideo({
                             waitForAutoplayTimeout
     });
 
+    let context = useContext(EkoPlayerContext);
+    
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
         setPlayerLoadingState({state, params});
@@ -78,6 +83,9 @@ export function EkoVideo({
             playerRef.current = new EkoPlayer(ekoProjectContainer.current, embedAPI);
             if (onPlayerInit){
                 onPlayerInit(playerRef.current);
+            }
+            if (context && context.setPlayerState) {
+                context.setPlayerState({player: playerRef.current});
             }
         } else {
             setIsSupported(false);
@@ -113,7 +121,7 @@ export function EkoVideo({
             clientSideParams,
             env,
             params,
-            events: eventList,
+            events: [...eventList, ...DEFAULT_EVENTS],
             excludePropagatedParams: excludePropagatedParams || [],
         });
 
