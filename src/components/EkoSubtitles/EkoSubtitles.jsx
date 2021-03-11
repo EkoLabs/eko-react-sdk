@@ -14,11 +14,12 @@ const AD_LANGUAGES = ['en-US-AD'];
  * @type {React.Component}
  * @param {object} props
  * @param {object} props.style - Used to style the subtitles component
+ * @param {boolean} props.initialVisibility - Used to determine if the subtitles should be visible by default or not
  *
  */
-export function EkoSubtitles({style}) {
+export function EkoSubtitles({style, initialVisibility}) {
 
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(initialVisibility || false);
     const [text, setText] = useState('');
     const [effectiveLang, setEffectiveLang] = useState('');
     
@@ -68,5 +69,6 @@ export function EkoSubtitles({style}) {
 }
 
 EkoSubtitles.propTypes = {
-    style: PropTypes.object
+    style: PropTypes.object,
+    initialVisibility: PropTypes.bool
 };

@@ -160,7 +160,8 @@ If necessary, you can render the subtitles outside of the player using the `EkoS
 
 | Prop           | Type           | Description  |
 | :-------------: |:--------------:| :------------|
-| style | `object` | Used to style the subtitles element. |  
+| style | `object` | Used to style the subtitles element. |
+| initialVisibility | `boolean` | Used to set if the subtitles are visible by default or not. |  
 
 **Note:** If you are using the `EkoSubtitles` component, you **must** also use `EkoPlayerProvider` so the subtitles component can access the player. See below for example usage.
 
@@ -169,6 +170,6 @@ Example:
 ```jsx
 <EkoPlayerProvider>
     <EkoVideo id="AWLLK1"/>
-    <EkoSubtitles style = {{color: 'white', background: 'black'}}/>
+    <EkoSubtitles style = {{color: 'white', background: 'black'}} initialVisibility={true}/>
 </EkoPlayerProvider>
 ```
