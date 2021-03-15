@@ -32,6 +32,9 @@ export function EkoSubtitles({style, initialVisibility}) {
         if (!player) {
             return;
         }
+        if (typeof initialVisibility !== 'undefined') {
+            player.invoke('subtitles.visible', initialVisibility);
+        }
         const onSubtitlesInit = () => player.invoke('subtitles.mode', 'proxy');
         const onVisibilityChange = (isVisible) =>  setVisible(isVisible);
         const onSubStart = (subObj) =>  setText(subObj.text);
