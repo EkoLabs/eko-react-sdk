@@ -161,7 +161,7 @@ export function EkoVideo({
                     boundHandlers[eventName].forEach( handler => playerRef.current.off(eventName, handler));
                 })
             }
-            playerRef.current.off('plugininited', onPluginInited);
+            playerRef.current.off('plugininit', onPluginInited);
         };
 
     }, [playerRef.current, id]);
