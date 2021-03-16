@@ -7,7 +7,7 @@ import {useCovers} from "./useCovers";
 import {getRenderable} from "./utils";
 import {EkoPlayerContext} from "../EkoPlayerContext/EkoPlayerContext";
 
-const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininitsubtitles'];
+const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininit'];
 
 // TODO
 // ====
@@ -69,7 +69,7 @@ export function EkoVideo({
     });
 
     let context = useContext(EkoPlayerContext);
-    
+    let pluginInitedMap = {};
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
         setPlayerLoadingState({state, params});
@@ -85,7 +85,10 @@ export function EkoVideo({
                 onPlayerInit(playerRef.current);
             }
             if (context && context.setPlayerState) {
-                context.setPlayerState({player: playerRef.current});
+                context.setPlayerState(prevState => ({
+                    ...prevState, 
+                    player: playerRef.current
+                }));
             }
         } else {
             setIsSupported(false);
@@ -113,6 +116,32 @@ export function EkoVideo({
             eventList = Object.keys(events);
         }
 
+        const onPluginInited = (pluginName, version) => {
+            if (!pluginInitedMap[pluginName]) {
+                pluginInitedMap[pluginName] = Promise.resolve(pluginName);
+            }
+        }
+        
+        playerRef.current.on('plugininit', onPluginInited);
+
+        const pluginInited = (name) => {
+            let promise = pluginInitedMap[name] || new Promise((resolve, reject) => {
+                playerRef.current.on('plugininit', (pluginName, version) => {
+                    if (pluginName === name) {
+                        resolve(name);
+                    }
+                });
+            });
+            pluginInitedMap[name] = promise;
+            return pluginInitedMap[name];
+        }
+
+        if (context && context.setPlayerState) {
+            context.setPlayerState(prevState => ({
+                ...prevState,
+                pluginInited: pluginInited
+            }));
+        }
         setPlayerLoadingState({state: 'loading'});
 
         // Build loading options and load required project.
@@ -132,6 +161,7 @@ export function EkoVideo({
                     boundHandlers[eventName].forEach( handler => playerRef.current.off(eventName, handler));
                 })
             }
+            playerRef.current.off('plugininited', onPluginInited);
         };
 
     }, [playerRef.current, id]);

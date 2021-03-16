@@ -6,7 +6,8 @@ export default {
     title: 'Example/EkoSubtitles',
     component: EkoSubtitles,
     argTypes: {
-        style: {}
+        style: {},
+        initialVisibility: {}
     },
     parameters: {
         docs: {
@@ -36,7 +37,8 @@ const defaultArgs = {
     seekTime: 2,
     params: {
         clearcheckpoints: true,
-        autoplay: true
+        autoplay: true,
+        subtitlesmode: 'proxy'
     },
 };
 
@@ -53,7 +55,8 @@ const defaultParams = {
 export const SimpleSubtitles = ExternalSubtitlesTemplate.bind({});
 SimpleSubtitles.args = {
     ...defaultArgs,
-    style: {background: 'black', color: 'white', padding: '10px 30px'}
+    style: {background: 'black', color: 'white', padding: '10px 30px'},
+    initialVisibility: true
 }
 
 SimpleSubtitles.parameters ={
@@ -64,7 +67,8 @@ SimpleSubtitles.parameters ={
 export const StyledSubtitles = ExternalSubtitlesTemplate.bind({});
 StyledSubtitles.args = {
     ...defaultArgs,
-    style: {background: 'black', color: 'red', padding: '10px 30px', font: '18px Arial'}
+    style: {background: 'black', color: 'red', padding: '10px 30px', font: '18px Arial'},
+    initialVisibility: true
 }
 
 StyledSubtitles.parameters ={

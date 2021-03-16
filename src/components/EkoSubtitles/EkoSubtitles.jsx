@@ -18,7 +18,6 @@ const AD_LANGUAGES = ['en-US-AD'];
  *
  */
 export function EkoSubtitles({style, initialVisibility}) {
-
     const [visible, setVisible] = useState(initialVisibility || false);
     const [text, setText] = useState('');
     const [effectiveLang, setEffectiveLang] = useState('');
@@ -28,27 +27,30 @@ export function EkoSubtitles({style, initialVisibility}) {
         throw new Error('This component needs to be wrapped in a player context, but one was not found');
     }
     let player = context && context.playerState && context.playerState.player;
+    let pluginInited = context && context.playerState && context.playerState.pluginInited;
+    
     useEffect(() => {
         if (!player) {
             return;
         }
-        if (typeof initialVisibility !== 'undefined') {
-            player.invoke('subtitles.visible', initialVisibility);
+        if (pluginInited) {
+            pluginInited('subtitles').then((res) => {
+                player.invoke('subtitles.mode', 'proxy');
+                player.invoke('subtitles.visible', visible);
+            });
         }
-        const onSubtitlesInit = () => player.invoke('subtitles.mode', 'proxy');
+
         const onVisibilityChange = (isVisible) =>  setVisible(isVisible);
         const onSubStart = (subObj) =>  setText(subObj.text);
         const onSubEnd = (subObj) =>  setText('');
         const onLangChange = (effectiveLanguage) =>  setEffectiveLang(effectiveLanguage);
-
-        player.on('plugininitsubtitles', onSubtitlesInit);
+        
         player.on('subtitles.visibilitychange', onVisibilityChange);
         player.on('subtitles.substart', onSubStart);
         player.on('subtitles.subend', onSubEnd);
         player.on('subtitles.effectivelanguagechange', onLangChange);
         
         return () => {
-            player.off('plugininitsubtitles', onSubtitlesInit);
             player.off('subtitles.visibilitychange', onVisibilityChange);
             player.off('subtitles.substart', onSubStart);
             player.off('subtitles.subend', onSubEnd);

@@ -11,7 +11,7 @@ import React, {createContext, useState} from 'react';
 
 const EkoPlayerContext = createContext();
 function EkoPlayerProvider(props) {
-    const [playerState, setPlayerState] = useState({});
+    const [playerState, setPlayerState] = useState({player: undefined, pluginInited: undefined});
     return (
         <EkoPlayerContext.Provider value={{playerState, setPlayerState}}>
             {props.children}
