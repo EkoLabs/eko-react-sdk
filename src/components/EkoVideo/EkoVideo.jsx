@@ -69,7 +69,7 @@ export function EkoVideo({
     });
 
     let context = useContext(EkoPlayerContext);
-    let pluginInitedMap = {};
+    const [pluginInitedMap, setPluginInitedMap] = useState({});
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
         setPlayerLoadingState({state, params});
@@ -118,7 +118,10 @@ export function EkoVideo({
 
         const onPluginInited = (pluginName, version) => {
             if (!pluginInitedMap[pluginName]) {
-                pluginInitedMap[pluginName] = Promise.resolve(pluginName);
+                setPluginInitedMap((prevState) => ({
+                    ...prevState,
+                    [pluginName]: Promise.resolve(pluginName)
+                }));
             }
         }
         
@@ -132,8 +135,13 @@ export function EkoVideo({
                     }
                 });
             });
-            pluginInitedMap[name] = promise;
-            return pluginInitedMap[name];
+
+            setPluginInitedMap((prevState) => ({
+                ...prevState,
+                [name]: promise
+            }));
+            
+            return promise;
         }
 
         if (context && context.setPlayerState) {
@@ -175,7 +183,7 @@ export function EkoVideo({
     let containerClassNames = ["eko_component_container"];
     containerClassNames.push(expandToFillContainer?"expand":"intrinsicSize")
 
-
+    console.log(pluginInitedMap);
     // Render eko video
     return (
         <div className={containerClassNames.join(" ")}>

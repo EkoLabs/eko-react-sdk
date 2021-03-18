@@ -42,7 +42,13 @@ export function EkoSubtitles({style, initialVisibility}) {
 
         const onVisibilityChange = (isVisible) =>  setVisible(isVisible);
         const onSubStart = (subObj) =>  setText(subObj.text);
-        const onSubEnd = (subObj) =>  setText('');
+        const onSubEnd = (subObj) =>  {
+            setText('');
+            //TO DO: remove this, its just to test the plugin inited api
+            pluginInited('audio').then((res) => {
+                console.log('AUDIOS BEEN LOADED');
+            })
+        }
         const onLangChange = (effectiveLanguage) =>  setEffectiveLang(effectiveLanguage);
         
         player.on('subtitles.visibilitychange', onVisibilityChange);
@@ -56,7 +62,7 @@ export function EkoSubtitles({style, initialVisibility}) {
             player.off('subtitles.subend', onSubEnd);
             player.off('subtitles.effectivelanguagechange', onLangChange);
         };
-    }, [player]);
+    }, [player, visible, pluginInited]);
 
     // Add right-to-left "direction" css for required languages.
     let rtl = RTL_LANGUAGES.includes(effectiveLang) ? 'rtl' : '';
