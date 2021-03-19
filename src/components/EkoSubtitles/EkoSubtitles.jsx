@@ -27,28 +27,21 @@ export function EkoSubtitles({style, initialVisibility}) {
         throw new Error('This component needs to be wrapped in a player context, but one was not found');
     }
     let player = context && context.playerState && context.playerState.player;
-    let pluginInited = context && context.playerState && context.playerState.pluginInited;
+    let pluginInitedService = context && context.playerState && context.playerState.pluginInitedService;
     
     useEffect(() => {
-        if (!player) {
+        if (!pluginInitedService || !player) {
             return;
         }
-        if (pluginInited) {
-            pluginInited('subtitles').then((res) => {
-                player.invoke('subtitles.mode', 'proxy');
-                player.invoke('subtitles.visible', visible);
-            });
-        }
+        
+        pluginInitedService.pluginInited('subtitles').then((res) => {
+            player.invoke('subtitles.mode', 'proxy');
+            player.invoke('subtitles.visible', initialVisibility);
+        });
 
         const onVisibilityChange = (isVisible) =>  setVisible(isVisible);
         const onSubStart = (subObj) =>  setText(subObj.text);
-        const onSubEnd = (subObj) =>  {
-            setText('');
-            //TO DO: remove this, its just to test the plugin inited api
-            pluginInited('audio').then((res) => {
-                console.log('AUDIOS BEEN LOADED');
-            })
-        }
+        const onSubEnd = (subObj) =>  setText('');
         const onLangChange = (effectiveLanguage) =>  setEffectiveLang(effectiveLanguage);
         
         player.on('subtitles.visibilitychange', onVisibilityChange);
@@ -62,7 +55,7 @@ export function EkoSubtitles({style, initialVisibility}) {
             player.off('subtitles.subend', onSubEnd);
             player.off('subtitles.effectivelanguagechange', onLangChange);
         };
-    }, [player, visible, pluginInited]);
+    }, [player, pluginInitedService]);
 
     // Add right-to-left "direction" css for required languages.
     let rtl = RTL_LANGUAGES.includes(effectiveLang) ? 'rtl' : '';

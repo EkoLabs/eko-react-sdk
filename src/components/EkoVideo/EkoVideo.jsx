@@ -6,7 +6,7 @@ import "./EkoVideo.scss";
 import {useCovers} from "./useCovers";
 import {getRenderable} from "./utils";
 import {EkoPlayerContext} from "../EkoPlayerContext/EkoPlayerContext";
-
+import PlayerPluginsService from "../../PlayerPluginsService";
 const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininit'];
 
 // TODO
@@ -59,6 +59,7 @@ export function EkoVideo({
                       onPlayerInit,
                   }) {
     let playerRef = useRef();
+    let pluginServiceRef = useRef();
     const [isSupported, setIsSupported] = useState(true); // we optimistically assume the player is supported
     const [playerLoadingState, setPlayerLoadingState] = useState({state: null, params: {}});
     let covers = useCovers({
@@ -69,7 +70,6 @@ export function EkoVideo({
     });
 
     let context = useContext(EkoPlayerContext);
-    const [pluginInitedMap, setPluginInitedMap] = useState({});
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
         setPlayerLoadingState({state, params});
@@ -85,9 +85,11 @@ export function EkoVideo({
                 onPlayerInit(playerRef.current);
             }
             if (context && context.setPlayerState) {
+                pluginServiceRef.current = PlayerPluginsService.init(playerRef.current);
                 context.setPlayerState(prevState => ({
                     ...prevState, 
-                    player: playerRef.current
+                    player: playerRef.current,
+                    pluginInitedService: pluginServiceRef.current
                 }));
             }
         } else {
@@ -116,40 +118,6 @@ export function EkoVideo({
             eventList = Object.keys(events);
         }
 
-        const onPluginInited = (pluginName, version) => {
-            if (!pluginInitedMap[pluginName]) {
-                setPluginInitedMap((prevState) => ({
-                    ...prevState,
-                    [pluginName]: Promise.resolve(pluginName)
-                }));
-            }
-        }
-        
-        playerRef.current.on('plugininit', onPluginInited);
-
-        const pluginInited = (name) => {
-            let promise = pluginInitedMap[name] || new Promise((resolve, reject) => {
-                playerRef.current.on('plugininit', (pluginName, version) => {
-                    if (pluginName === name) {
-                        resolve(name);
-                    }
-                });
-            });
-
-            setPluginInitedMap((prevState) => ({
-                ...prevState,
-                [name]: promise
-            }));
-            
-            return promise;
-        }
-
-        if (context && context.setPlayerState) {
-            context.setPlayerState(prevState => ({
-                ...prevState,
-                pluginInited: pluginInited
-            }));
-        }
         setPlayerLoadingState({state: 'loading'});
 
         // Build loading options and load required project.
@@ -169,7 +137,6 @@ export function EkoVideo({
                     boundHandlers[eventName].forEach( handler => playerRef.current.off(eventName, handler));
                 })
             }
-            playerRef.current.off('plugininit', onPluginInited);
         };
 
     }, [playerRef.current, id]);
@@ -183,7 +150,6 @@ export function EkoVideo({
     let containerClassNames = ["eko_component_container"];
     containerClassNames.push(expandToFillContainer?"expand":"intrinsicSize")
 
-    console.log(pluginInitedMap);
     // Render eko video
     return (
         <div className={containerClassNames.join(" ")}>
