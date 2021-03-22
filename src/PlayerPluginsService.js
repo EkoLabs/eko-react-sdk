@@ -14,8 +14,6 @@ class PlayerPluginsService {
     static init(player) {
         if (!this._instance) {
             this._instance = new PlayerPluginsService(player);
-        } else if (this._player && this._player !== player) { 
-            this._instance = new PlayerPluginsService(player);
         }
         return this._instance;
     }
@@ -55,7 +53,6 @@ class PlayerPluginsService {
 
     dispose() {
         this.removeEventListeners();
-        this._instance = undefined;
     }
 
 
