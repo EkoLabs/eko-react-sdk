@@ -6,14 +6,15 @@ import {EkoPlayerProvider} from '../../components/EkoPlayerContext/EkoPlayerCont
 export default function ExternalSubtitlesTemplate(args, context){
     args.onPlayerInit = (player) => { 
         if (player) {
-            player.once('plugininitsubtitles', () => {
-                player.invoke('subtitles.visible', true);
-                player.invoke('subtitles.language', 'en');
+            player.on('plugininit', (pluginName) => {
+                if (pluginName === 'subtitles') {
+                    player.invoke('subtitles.visible', true);
+                    player.invoke('subtitles.language', 'en');
+                }
             });
         } 
     };
     let ekoVideo = EkoVideoTemplate(args, context);
-    let style = args.style || {};
     return (
         <EkoPlayerProvider>
             <div style={{height: 100 + '%', width: 100 + '%'}}>
@@ -21,7 +22,7 @@ export default function ExternalSubtitlesTemplate(args, context){
                     {ekoVideo}
                 </div>
                 <h5 style={{padding: '10px 30px', margin: 0, color: 'white', background: 'black'}}>External Subtitles Below:</h5>
-                <EkoSubtitles style={style}/>
+                <EkoSubtitles {...args}/>
             </div>
         </EkoPlayerProvider>
     )

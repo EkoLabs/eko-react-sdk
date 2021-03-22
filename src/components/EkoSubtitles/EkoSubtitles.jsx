@@ -14,11 +14,11 @@ const AD_LANGUAGES = ['en-US-AD'];
  * @type {React.Component}
  * @param {object} props
  * @param {object} props.style - Used to style the subtitles component
+ * @param {boolean} props.initialVisibility - Used to determine if the subtitles should be visible by default or not
  *
  */
-export function EkoSubtitles({style}) {
-
-    const [visible, setVisible] = useState(false);
+export function EkoSubtitles({style, initialVisibility}) {
+    const [visible, setVisible] = useState(initialVisibility || false);
     const [text, setText] = useState('');
     const [effectiveLang, setEffectiveLang] = useState('');
     
@@ -27,30 +27,35 @@ export function EkoSubtitles({style}) {
         throw new Error('This component needs to be wrapped in a player context, but one was not found');
     }
     let player = context && context.playerState && context.playerState.player;
+    let pluginInitedService = context && context.playerState && context.playerState.pluginInitedService;
+    
     useEffect(() => {
-        if (!player) {
+        if (!pluginInitedService || !player) {
             return;
         }
-        const onSubtitlesInit = () => player.invoke('subtitles.mode', 'proxy');
+        
+        pluginInitedService.pluginInited('subtitles').then((res) => {
+            player.invoke('subtitles.mode', 'proxy');
+            player.invoke('subtitles.visible', initialVisibility);
+        });
+
         const onVisibilityChange = (isVisible) =>  setVisible(isVisible);
         const onSubStart = (subObj) =>  setText(subObj.text);
         const onSubEnd = (subObj) =>  setText('');
         const onLangChange = (effectiveLanguage) =>  setEffectiveLang(effectiveLanguage);
-
-        player.on('plugininitsubtitles', onSubtitlesInit);
+        
         player.on('subtitles.visibilitychange', onVisibilityChange);
         player.on('subtitles.substart', onSubStart);
         player.on('subtitles.subend', onSubEnd);
         player.on('subtitles.effectivelanguagechange', onLangChange);
         
         return () => {
-            player.off('plugininitsubtitles', onSubtitlesInit);
             player.off('subtitles.visibilitychange', onVisibilityChange);
             player.off('subtitles.substart', onSubStart);
             player.off('subtitles.subend', onSubEnd);
             player.off('subtitles.effectivelanguagechange', onLangChange);
         };
-    }, [player]);
+    }, [player, pluginInitedService]);
 
     // Add right-to-left "direction" css for required languages.
     let rtl = RTL_LANGUAGES.includes(effectiveLang) ? 'rtl' : '';
@@ -68,5 +73,6 @@ export function EkoSubtitles({style}) {
 }
 
 EkoSubtitles.propTypes = {
-    style: PropTypes.object
+    style: PropTypes.object,
+    initialVisibility: PropTypes.bool
 };

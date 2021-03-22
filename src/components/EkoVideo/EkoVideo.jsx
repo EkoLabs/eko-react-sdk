@@ -6,8 +6,8 @@ import "./EkoVideo.scss";
 import {useCovers} from "./useCovers";
 import {getRenderable} from "./utils";
 import {EkoPlayerContext} from "../EkoPlayerContext/EkoPlayerContext";
-
-const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininitsubtitles'];
+import PlayerPluginsService from "../../PlayerPluginsService";
+const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'subtitles.subend', 'subtitles.effectivelanguagechange', 'plugininit'];
 
 // TODO
 // ====
@@ -59,6 +59,7 @@ export function EkoVideo({
                       onPlayerInit,
                   }) {
     let playerRef = useRef();
+    let pluginServiceRef = useRef();
     const [isSupported, setIsSupported] = useState(true); // we optimistically assume the player is supported
     const [playerLoadingState, setPlayerLoadingState] = useState({state: null, params: {}});
     let covers = useCovers({
@@ -69,7 +70,6 @@ export function EkoVideo({
     });
 
     let context = useContext(EkoPlayerContext);
-    
     const ekoProjectContainer = useRef(null);
     const onCoverStateChanged = (state, params) => {
         setPlayerLoadingState({state, params});
@@ -85,7 +85,12 @@ export function EkoVideo({
                 onPlayerInit(playerRef.current);
             }
             if (context && context.setPlayerState) {
-                context.setPlayerState({player: playerRef.current});
+                pluginServiceRef.current = PlayerPluginsService.init(playerRef.current);
+                context.setPlayerState(prevState => ({
+                    ...prevState, 
+                    player: playerRef.current,
+                    pluginInitedService: pluginServiceRef.current
+                }));
             }
         } else {
             setIsSupported(false);
@@ -144,7 +149,6 @@ export function EkoVideo({
 
     let containerClassNames = ["eko_component_container"];
     containerClassNames.push(expandToFillContainer?"expand":"intrinsicSize")
-
 
     // Render eko video
     return (
