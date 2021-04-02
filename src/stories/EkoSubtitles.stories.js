@@ -35,6 +35,13 @@ function(props){
 const defaultArgs = {
     id: "MYjeJr",
     seekTime: 2,
+    events: {
+        seeked: function() {
+            this.once('subtitles.substart', () => {
+                this.pause();
+            });
+        }
+    },
     params: {
         clearcheckpoints: true,
         autoplay: true,
