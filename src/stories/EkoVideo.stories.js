@@ -91,6 +91,7 @@ CustomLoadingCover.args = {
     id: "sc88q49",
     loadingCover: CookingLoadingCover,
     embedAPI: "2.0",
+    excludePropagatedParams: ['id']
 };
 
 CustomLoadingCover.parameters = {
@@ -108,6 +109,7 @@ CustomLoadingCoverWithCustomTransition.args = {
     id: "sc88q49",
     loadingCover: CookingLoadingCoverWithCustomTransition,
     embedAPI: "2.0",
+    excludePropagatedParams: ['id']
 };
 
 CustomLoadingCoverWithCustomTransition.parameters = {

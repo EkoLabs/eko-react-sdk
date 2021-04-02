@@ -30,10 +30,13 @@ export default function EkoVideoTemplate(args, context){
         }
 
         args.events = {
-            "nodestarted": onPlayStart,
             "ekoshell.playing": onPlayStart, // special handling for ekoshell 1 issue
             "seeked": function(){
                 this.pause();
+            },
+            "playing": function(){
+                this.pause();
+                onPlayStart();
             }
         }
 
