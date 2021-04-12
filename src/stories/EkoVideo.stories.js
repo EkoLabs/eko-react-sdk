@@ -93,6 +93,15 @@ const cookshopDefaultArgs = {
     ...(
         isChromatic() &&
         {
+            // Pause once decision has started (UI is shown)
+            events: {
+                'decision.start': () => {},
+                seeked: function(){
+                    this.once('decision.start', () => {
+                        this.pause();
+                    });
+                },
+            },
             params: {
                 headnodeid: 'node_0_loop_55ad71',
                 context: 'cc5jqNEz',
