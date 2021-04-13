@@ -164,7 +164,10 @@ EkoVideo.propTypes = {
     id: PropTypes.string.isRequired,
     embedAPI: PropTypes.string,
     env: PropTypes.string,
-    clientSideParams: PropTypes.object,
+    clientSideParams: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.func
+    ]),
     params: PropTypes.objectOf(
         PropTypes.oneOfType([
             PropTypes.string,

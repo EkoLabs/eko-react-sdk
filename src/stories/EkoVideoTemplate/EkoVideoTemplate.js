@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import isChromatic from 'chromatic/isChromatic';
+import isChromatic from '../utils/isChromatic';
 import { EkoVideo } from '../../components/EkoVideo/EkoVideo';
 import './EkoVideoTemplate.scss';
-
-let testChromatic = (new URLSearchParams(window.location.search)).has("testChromatic");
 
 export default function EkoVideoTemplate(args, context){
     let [shouldLoad, setShouldLoad] = useState();
 
-    if (testChromatic || isChromatic()) {
+    if (isChromatic()) {
         // some stories use specific tests for chromatic
         if (args.chromaticId){
             args.id = args.chromaticId;
@@ -30,11 +28,14 @@ export default function EkoVideoTemplate(args, context){
         }
 
         args.events = {
-            "nodestarted": onPlayStart,
+            "playing": onPlayStart,
             "ekoshell.playing": onPlayStart, // special handling for ekoshell 1 issue
             "seeked": function(){
-                this.pause();
-            }
+                this.once('playing', () => {
+                    this.pause();
+                });
+            },
+            ...args.events,
         }
 
     }

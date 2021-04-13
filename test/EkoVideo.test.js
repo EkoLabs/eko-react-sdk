@@ -82,16 +82,28 @@ describe('EkoVideo', () => {
         );
     });
 
-    test('ClientSideParam prop is passed to the load function within the options object', () => {
+    test('clientSideParam object prop is passed to the load function within the options object', () => {
         const clientSideParams = { param1:'value1', param2:'value2' };
         mount(<EkoVideo id="123" clientSideParams={clientSideParams}/>);
         
         expect(mockLoad).toHaveBeenCalledWith("123",
-        expect.objectContaining({
-            clientSideParams
-        })
-    );
+            expect.objectContaining({
+                clientSideParams
+            })
+        );
     });
+
+    test('clientSideParam function prop is passed to the load function within the options object', () => {
+        const clientSideParams = () => Promise.resolve({ coolio: 'ya' });
+        mount(<EkoVideo id="123" clientSideParams={clientSideParams}/>);
+        
+        expect(mockLoad).toHaveBeenCalledWith("123",
+            expect.objectContaining({
+                clientSideParams
+            })
+        );
+    });
+
 
     test('Registered event handlers in eko-js-sdk should be called with the right params', () => {
         let thisChecker = jest.fn();

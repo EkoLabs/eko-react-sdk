@@ -173,3 +173,4 @@ Example:
     <EkoSubtitles style = {{color: 'white', background: 'black'}} initialVisibility={true}/>
 </EkoPlayerProvider>
 ```
+

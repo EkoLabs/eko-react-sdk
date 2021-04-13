@@ -3,6 +3,7 @@ import { EkoVideo } from '../components/EkoVideo/EkoVideo';
 import CookingLoadingCover from "./CookingLoadingCover/CookingLoadingCover";
 import CookingLoadingCoverWithCustomTransition from "./CookingLoadingCover/CookingLoadingCoverWithCustomTransition";
 import EkoVideoTemplate from "./EkoVideoTemplate/EkoVideoTemplate";
+import isChromatic from './utils/isChromatic';
 
 export default {
     title: 'Example/EkoVideo',
@@ -85,12 +86,52 @@ NoAutoplay.args = {
     }
 };
 
+const cookshopDefaultArgs = {
+    id: "sc88q49",
+    embedAPI: "2.0",
+    excludePropagatedParams: ['id'],
+    ...(
+        isChromatic() &&
+        {
+            // Pause once decision has started (UI is shown)
+            events: {
+                'decision.start': () => {},
+                seeked: function(){
+                    this.once('decision.start', () => {
+                        this.pause();
+                    });
+                },
+            },
+            params: {
+                headnodeid: 'node_0_loop_55ad71',
+                context: 'cc5jqNEz',
+
+                // Disable ekoshell background color when paused
+                deliveryobject: JSON.stringify({
+                    environment: {
+                        playerOptionsOverrides: {
+                            plugins: {
+                                ekoshell: {
+                                    addons: {
+                                        projectmetadata: {
+                                            background: 'rgba(0,0,0,0)'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }),
+            }
+        }
+    )
+};
+
 // custom loading cover
 export const CustomLoadingCover = EkoVideoTemplate.bind({});
 CustomLoadingCover.args = {
-    id: "sc88q49",
+    ...cookshopDefaultArgs,
     loadingCover: CookingLoadingCover,
-    embedAPI: "2.0",
 };
 
 CustomLoadingCover.parameters = {
@@ -105,9 +146,8 @@ CustomLoadingCover.parameters = {
 
 export const CustomLoadingCoverWithCustomTransition = EkoVideoTemplate.bind({});
 CustomLoadingCoverWithCustomTransition.args = {
-    id: "sc88q49",
+    ...cookshopDefaultArgs,
     loadingCover: CookingLoadingCoverWithCustomTransition,
-    embedAPI: "2.0",
 };
 
 CustomLoadingCoverWithCustomTransition.parameters = {

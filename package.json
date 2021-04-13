@@ -1,11 +1,11 @@
 {
   "name": "@ekolabs/eko-react-sdk",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "A react component that embeds eko videos",
   "main": "dist/bundles/bundle.js",
   "homepage": "https://ekolabs.github.io/eko-react-sdk/",
   "dependencies": {
-    "@ekolabs/eko-js-sdk": "0.0.14",
+    "@ekolabs/eko-js-sdk": "0.0.16",
     "prop-types": "^15.7.2",
     "react-is": "^17.0.1"
   },
