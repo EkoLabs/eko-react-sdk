@@ -21,8 +21,8 @@ const DEFAULT_EVENTS = ['subtitles.visibilitychange', 'subtitles.substart', 'sub
  * @member module:components#EkoVideo
  * @type {React.Component}
  * @param {object} props
- * @param {string} props.id - The eko project ID to load. Changing this prop will cause a reload.
- * @param {embedAPI} props.embedAPI - eko embed api version to be used internally. Valid values include "1.0", "2.0". If no value given, default value "1.0" will be used.
+ * @param {string} props.id - The eko content ID to load. Changing this prop will cause a reload.
+ * @param {embedAPI} props.embedAPI - eko embed api version to be used internally. Valid values include "1.0", "2.0", "3,0". If no value given, default value "1.0" will be used.
  * @param {string} props.env - The eko env
  * @param {object} props.params - A dictionary of embed params that will affect the delivery. Default includes `{autoplay: true}`
  * @param {string[]} props.excludePropagatedParams - By default, all query string params present on the page will be forwarded onto the video iframe. In order to exclude params from being forwarded, you can supply an array of query param keys (strings or regexes) to list the params that should not be propagated.
